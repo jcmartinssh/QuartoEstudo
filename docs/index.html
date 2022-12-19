@@ -459,7 +459,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="fonte-de-dados" class="level3">
 <h3 class="anchored" data-anchor-id="fonte-de-dados">Fonte de dados</h3>
-<p>Carrega o JSON servido pelo serviço WFS do geoserver do IBGE. Ver <a href="https://geoservicos.ibge.gov.br/geoserver/web/wicket/bookmarkable/org.geoserver.web.demo.MapPreviewPage?1&amp;filter=false">aqui</a> a lista de serviços disponbibilizada pelo IBGE. Tem bastante coisa! No caso das BATERs, elas já vêm com os variáveis da publicação, além da geometria. A grande vantagem de usar o serviço wfs é não precisar manter as camadas espaciais que forem utilizadas na parte interativa no repositório do site, economizando muito espaço de armazenamento.</p>
+<p>Carrega o JSON servido pelo serviço WFS do geoserver do IBGE. Ver <a href="https://geoservicos.ibge.gov.br/geoserver/web/wicket/bookmarkable/org.geoserver.web.demo.MapPreviewPage?1&amp;filter=false">aqui</a> a lista de serviços disponibilizada pelo IBGE. Tem bastante coisa! No caso das BATERs, elas já vêm com os variáveis da publicação, além da geometria. A grande vantagem de usar o serviço wfs é não precisar manter as camadas espaciais que forem utilizadas na parte interativa no repositório do site, economizando muito espaço de armazenamento.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -537,7 +537,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="mapa" class="level3">
 <h3 class="anchored" data-anchor-id="mapa">Mapa</h3>
 <p>Aqui produz o mapa com as BATERs do município selecionado. A biblioteca <a href="https://observablehq.com/collection/@neocartocnrs/bertin"><em>bertin</em></a> é mais pra produzir cartogramas, não dá pra “passear” pelo mapa. Mas pode-se fazer, por exemplo, janelinhas <em>pop up</em> com os dados da BATER que aparecem ao clicar na mesma. Existem outras bibliotecas para trabalhar com mapas, a <a href="https://observablehq.com/@observablehq/plot"><em>plot</em></a> que é parecida com a <em>bertin</em>, e algumas de mapas mesmo, <a href="https://observablehq.com/@mbostock/hello-openlayers"><em>openlayer</em></a>, <a href="https://observablehq.com/@tmcw/leaflet"><em>leaflet</em></a> e <a href="https://observablehq.com/@tmcw/using-mapbox-gl-js"><em>mapbox</em></a>. Devo utilizar no final a a <em>openlayer</em> ou a <em>leaflet</em>.</p>
-<p>Além de mapas, dá pra produzir as tabelas interativas (a pessoa pode filtrar por qualquer campo, por exemplo, e ordenar por qualquer coluna) e gráficos também. E tudo isso rodando no navegador, sem precisar de um servidor com interpretador de <em>R</em> ou <em>Python</em> instalados, com as bibliotecas como <em>Shiny</em> ou <em>Dash</em> nas versões certas e dispor de tempo de processador para processar as ações de todos os usuários simultâneos… O servidor só precisa servir o site, e nada mais.</p>
+<p>Além de mapas, dá pra produzir as tabelas interativas (a pessoa pode filtrar por qualquer campo, por exemplo, e ordenar por qualquer coluna) e gráficos também. E tudo isso rodando no navegador, sem precisar de um servidor com interpretador de <em>R</em> ou <em>Python</em> instalados, com as bibliotecas como <a href="https://shiny.rstudio.com/"><em>Shiny</em></a> ou <a href="https://dash.plotly.com/"><em>Dash</em></a> nas versões certas e dispor de tempo de processador para processar as ações de todos os usuários simultâneos… O servidor só precisa servir o site, e nada mais.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
