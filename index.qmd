@@ -198,7 +198,7 @@ bertin = require("bertin")
 ```
 
 ### Fonte de dados
-Carrega o JSON servido pelo serviço WFS do geoserver do IBGE. Ver [aqui](https://geoservicos.ibge.gov.br/geoserver/web/wicket/bookmarkable/org.geoserver.web.demo.MapPreviewPage?1&filter=false) a lista de serviços disponbibilizada pelo IBGE. Tem bastante coisa! No caso das BATERs, elas já vêm com os variáveis da publicação, além da geometria. A grande vantagem de usar o serviço wfs é não precisar manter as camadas espaciais que forem utilizadas na parte interativa no repositório do site, economizando muito espaço de armazenamento.
+Carrega o JSON servido pelo serviço WFS do geoserver do IBGE. Ver [aqui](https://geoservicos.ibge.gov.br/geoserver/web/wicket/bookmarkable/org.geoserver.web.demo.MapPreviewPage?1&filter=false) a lista de serviços disponibilizada pelo IBGE. Tem bastante coisa! No caso das BATERs, elas já vêm com os variáveis da publicação, além da geometria. A grande vantagem de usar o serviço wfs é não precisar manter as camadas espaciais que forem utilizadas na parte interativa no repositório do site, economizando muito espaço de armazenamento.
 ```{ojs}
 
 jsonURL = "https://geoservicos.ibge.gov.br/geoserver/CGEO/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=CGEO%3APARBR2018_BATER_MD&maxFeatures=600000&outputFormat=application%2Fjson"
