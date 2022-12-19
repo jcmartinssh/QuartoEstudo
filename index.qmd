@@ -1,16 +1,21 @@
 ---
-title: "QuartoEstudo"
-author: "Jazzyjon"
-date: "12/18/2022"
+title: "Teste de funcionalidade ***Quarto***\npara sítio eletrônico com recursos interativos"
+author: "Joaquim"
+date: "12/19/2022"
 format: 
   html: 
     code-fold: true
     fig-height: 4
     fig-width: 5
 ---
+# Dados de alertas de risco de desastres enviados pelo CEMADEN.
 
-Esse foi um primeiro teste.
-Vou tentar colocar um mapa interativo, mesmo que não tendo nada a ver.
+A ideia é juntar a divulgação "estática" — com uma breve explanação de um conjunto de variáveis das BATERs relacionadas num tema, com revisão na bibliografia do uso dessas variáveis e outras considerações, analisando os resultados observados na escala nacional e de grandes regiões, podendo citar alguns casos de UF — com uma parte interativa, disponibilizando os dados agregados por UF e município, juntamente com um mapa com as BATERs do município selecionado com as feições *clicáveis*, abrindo uma caixinha de texto com as informações básicas da BATER e as variáveis da mesma exploradas no tema da publicação.
+
+## Processamento dos dados através do *R*
+
+### Bibliotecas
+Carrega as bibliotecas necessárias. São muitas, nesse caso.
 
 ```{r}
 #| warning: false
@@ -25,27 +30,21 @@ library(ggthemes)
 library(showtext)
 library(RColorBrewer)
 
-showtext_auto()
-showtext_opts(dpi = 300)
-font_add(family = "univers", regular = "C:/Windows/Fonts/univer.TTF")
+```
 
-theme_set(
-  theme_igray() + 
-    theme(plot.title = element_text(family = "univers", face = "bold", size = 11, hjust = 0.5, vjust = 0.5, lineheight = 1.1, margin = margin(12, 0, 12, 0)),
-          legend.position = "bottom",
-          legend.title = element_blank(),
-          legend.background = element_rect(fill = "white"),
-          legend.text = element_text(family = "univers", face = "plain", size = 9, margin = margin(0, 15, 0, 5)),
-          legend.key.width = unit(1.5, "cm"),
-          plot.background = element_rect(fill = "#d0cece"),
-          plot.margin = margin(t = 0, r = 40, b = 0, l = 10 ),
-          axis.title = element_text(family = "univers", face = "plain", size = 9),
-          axis.text = element_text(family = "univers", face = "plain", size = 7)))
+### Dados
+Carrega a tabela do Excel com os dados.
+```{r}
+#| warning: false
 
-arq_excel <- "W:/DGC_ACERVO_CGEO/PROJETOS_EM_ANDAMENTO/Cemaden/BOLSISTAS/Joaquim/AtlasNacional/Alertas/AlertasCemaden2012-2021.xlsx"
-municipios <- "W:/DGC_ACERVO_CGEO/PROJETOS_EM_ANDAMENTO/Cemaden/BOLSISTAS/Joaquim/AtlasNacional/BR_Municipios_2021/BR_Municipios_2021.shp"
+planilha <- read_excel("W:/DGC_ACERVO_CGEO/PROJETOS_EM_ANDAMENTO/Cemaden/BOLSISTAS/Joaquim/AtlasNacional/Alertas/AlertasCemaden2012-2021.xlsx")
 
-planilha <- read_excel(arq_excel)
+```
+
+### Agregação
+Produz a tabela de total de alertas por município.
+```{r}
+#| warning: false
 
 Tot_Mun <- planilha %>%
   group_by(`Código IBGE`, Evento) %>%
@@ -53,7 +52,14 @@ Tot_Mun <- planilha %>%
   mutate(Evento = ifelse(Evento == "Geo/Hidro", "Hidrogeo", Evento)) %>%
   pivot_wider(names_from = Evento, values_from = Tot_Event, values_fill = 0) %>%
   mutate(tot_geo = Geo + Hidrogeo, tot_hidro = Hidro + Hidrogeo)
-  
+
+```
+
+### Processamento
+Calcula as médias mensais por grande região e país e junta tudo numa mesma tabela, *Med_Geral*.
+```{r}
+#| warning: false
+
 Med_GdReg_data <- planilha %>%
   mutate(dataref = date_group(as.Date(planilha$Data), "month"),
          mes = factor(date_format(dataref, format = "%m"), 
@@ -86,10 +92,43 @@ Med_Geral <- Med_GdReg_data %>%
   bind_rows(Med_Pais_geral) %>%
   mutate(GdReg = factor(GdReg, levels = c("Brasil", "N", "NE", "SE", "S", "CO")))
 
+```
+
+## Produção dos gráficos estáticos
+
+### Tema
+Carrega configurações de tema para os gráficos, desenvolvido pro Atlas Nacional Digital.
+```{r}
+#| warning: false
+
+showtext_auto()
+showtext_opts(dpi = 300)
+font_add(family = "univers", regular = "C:/Windows/Fonts/univer.TTF")
+
+theme_set(
+  theme_igray() + 
+    theme(plot.title = element_text(family = "univers", face = "bold", size = 11, hjust = 0.5, vjust = 0.5, lineheight = 1.1, margin = margin(12, 0, 12, 0)),
+          legend.position = "bottom",
+          legend.title = element_blank(),
+          legend.background = element_rect(fill = "white"),
+          legend.text = element_text(family = "univers", face = "plain", size = 9, margin = margin(0, 15, 0, 5)),
+          legend.key.width = unit(1.5, "cm"),
+          plot.background = element_rect(fill = "#d0cece"),
+          plot.margin = margin(t = 0, r = 40, b = 0, l = 10 ),
+          axis.title = element_text(family = "univers", face = "plain", size = 9),
+          axis.text = element_text(family = "univers", face = "plain", size = 7)))
+
 cores <- c("#000000", brewer.pal(5, "Set1"))
 names(cores) <- c("Brasil", levels(Med_GdReg_data$GdReg))
 colScale <- scale_color_manual(name = "GdReg", labels = c("Brasil", "Norte", "Nordeste", "Sudeste", "Sul", "Centro-Oeste"), values = cores)
 lineScale <- scale_linetype_manual(name = "GdReg", labels = c("Brasil", "Norte", "Nordeste", "Sudeste", "Sul", "Centro-Oeste"), values = c(2, 1, 1, 1, 1, 1))
+
+```
+
+### Alertas Hidrológicos
+```{r}
+#| label: fig-hidro
+#| fig-cap: Hidrológico
 
 graf_hidro <- Med_Geral %>%
   filter(Tipo == "hidro") %>%
@@ -102,6 +141,14 @@ graf_hidro <- Med_Geral %>%
   colScale +
   theme(legend.margin = margin(0, 40, 0, 40))
 
+graf_hidro
+```
+
+### Alertas Geológicos
+```{r}
+#| label: fig-geo
+#| fig-cap: Geológico
+
 graf_geo <- Med_Geral %>%
   filter(Tipo == "geo") %>%
   ggplot(aes(x = mes, y = Media, colour = GdReg, group = GdReg, linetype = GdReg)) +
@@ -112,6 +159,15 @@ graf_geo <- Med_Geral %>%
   lineScale +
   colScale +
   theme(legend.margin = margin(0, 40, 0, 40))
+
+graf_geo
+```
+
+### Alertas
+Ainda tenho que ver como definir o tamanho individual das figuras. Por enquanto tá definido globalmente, no início do documento, e em polegadas, eca.
+```{r}
+#| label: fig-geral
+#| fig-cap: Geral
 
 graf_geral <- Med_Geral %>%
   filter(Tipo == "Event") %>%
@@ -125,38 +181,34 @@ graf_geral <- Med_Geral %>%
   colScale +
   theme(legend.margin = margin(0, 40, 0, 40)) +
   facet_wrap(vars(GdReg), nrow = 1)
-  
-```
 
-```{r}
-#| label: fighidro
-#| fig-cap: Hidrológico
-graf_hidro
-```
-```{r}
-#| label: figgeo
-#| fig-cap: Geológico
-graf_geo
-```
-
-
-```{r}
-#| label: figgeral
-#| fig-cap: Geral
 graf_geral
 ```
 
-E continuando, @fighidro, @figgeo e @figgeral rolaram de fazer mas ainda está parado.
+Dá pra referenciar as imagens no texto, @fig-hidro, @fig-geo e @fig-geral.
 
-## e eis a parte interativa!
+## Interatividade
+Existem muitas possibilidades de interatividade, em tabelas, gráficos e mapas. Teste primeiramente a produção de mapas, que me parece mais complexa. Para obter a interatividade rodando direto do navegador, deve-se utilizar o [**Observable**](https://observablehq.com/). Infelizmente o *proxy* do IBGE bloqueia! Vou pedir pra DI liberar depois.
 
+### Bibliotecas
+Carrega a biblioteca *bertin.js* para a produção de mapas
 ```{ojs}
 
 bertin = require("bertin")
+```
+
+### Fonte de dados
+Carrega o JSON servido pelo serviço WFS do geoserver do IBGE. Ver [aqui](https://geoservicos.ibge.gov.br/geoserver/web/wicket/bookmarkable/org.geoserver.web.demo.MapPreviewPage?1&filter=false) a lista de serviços disponbibilizada pelo IBGE. Tem bastante coisa! No caso das BATERs, elas já vêm com os variáveis da publicação, além da geometria. A grande vantagem de usar o serviço wfs é não precisar manter as camadas espaciais que forem utilizadas na parte interativa no repositório do site, economizando muito espaço de armazenamento.
+```{ojs}
 
 jsonURL = "https://geoservicos.ibge.gov.br/geoserver/CGEO/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=CGEO%3APARBR2018_BATER_MD&maxFeatures=600000&outputFormat=application%2Fjson"
 
 bater = d3.json(jsonURL)
+```
+
+### Input
+Aqui é criado a caixinha de seleção do município. O ideal é fazer um de UF antes pra reduzir a lista resultante. Depois eu faço, na camada WFS das BATERs não tem a sigla da UF, só o geocódigo, mais difícil de escolher a UF né. Só botar uma tabelinha com isso e fazer o join que resolve.
+```{ojs}
 
 viewof selmun = Inputs.select(
   bater.features.map((d) => d.properties.municipio),
@@ -168,11 +220,23 @@ viewof selmun = Inputs.select(
 )
 
 municipioArray = bater.features.filter((d) => d.properties.municipio == selmun)
+```
+
+### Filtragem
+Aqui as feições são filtradas segundo o município selecionado. O correto na verdade é aplicar o filtro antes de requisitar a camada wfs pra diminuir o tráfego de dados. Do jeito que está demora para carregar inicialmente o mapa, tem todo o tempo de recebimento da camada completa wfs do IBGE. Depois eu vejo como fazer.
+```{ojs}
 
 municipio = ({
   "type":"FeatureCollection",
   "features":municipioArray  
 })
+```
+
+### Mapa
+Aqui produz o mapa com as BATERs do município selecionado. A biblioteca [*bertin*](https://observablehq.com/collection/@neocartocnrs/bertin) é mais pra produzir cartogramas, não dá pra "passear" pelo mapa. Mas pode-se fazer, por exemplo, janelinhas *pop up* com os dados da BATER que aparecem ao clicar na mesma. Existem outras bibliotecas para trabalhar com mapas, a [*plot*](https://observablehq.com/@observablehq/plot) que é parecida com a *bertin*, e algumas de mapas mesmo, [*openlayer*](https://observablehq.com/@mbostock/hello-openlayers), [*leaflet*](https://observablehq.com/@tmcw/leaflet) e [*mapbox*](https://observablehq.com/@tmcw/using-mapbox-gl-js). Devo utilizar no final a a *openlayer* ou a *leaflet*.
+
+Além de mapas, dá pra produzir as tabelas interativas (a pessoa pode filtrar por qualquer campo, por exemplo, e ordenar por qualquer coluna) e gráficos também. E tudo isso rodando no navegador, sem precisar de um servidor com interpretador de *R* ou *Python* instalados, com as bibliotecas como *Shiny* ou *Dash* nas versões certas e dispor de tempo de processador para processar as ações de todos os usuários simultâneos... O servidor só precisa servir o site, e nada mais. 
+```{ojs}
 
 simplemap = bertin.draw({
   params: { background: "#bde1f0", margin: 10 },
