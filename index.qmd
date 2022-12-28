@@ -24,7 +24,7 @@ library(tidyverse)
 library(readxl)
 library(writexl)
 library(sf)
-library(fuzzyjoin)
+library(DT)
 library(clock)
 library(ggthemes)
 library(showtext)
@@ -39,6 +39,7 @@ Carrega a tabela do Excel com os dados.
 
 planilha <- read_excel("W:/DGC_ACERVO_CGEO/PROJETOS_EM_ANDAMENTO/Cemaden/BOLSISTAS/Joaquim/AtlasNacional/Alertas/AlertasCemaden2012-2021.xlsx")
 
+# datatable(planilha)
 ```
 
 ### Agregação
@@ -47,11 +48,15 @@ Produz a tabela de total de alertas por município.
 #| warning: false
 
 Tot_Mun <- planilha %>%
-  group_by(`Código IBGE`, Evento) %>%
+  mutate(Mun = str_to_upper(`Município`)) %>%
+  group_by(`Código IBGE`, Mun, `Evento`) %>%
   summarise(Tot_Event = n()) %>%
   mutate(Evento = ifelse(Evento == "Geo/Hidro", "Hidrogeo", Evento)) %>%
   pivot_wider(names_from = Evento, values_from = Tot_Event, values_fill = 0) %>%
-  mutate(tot_geo = Geo + Hidrogeo, tot_hidro = Hidro + Hidrogeo)
+  mutate(tot_geo = Geo + Hidrogeo, tot_hidro = Hidro + Hidrogeo) %>%
+  select(`Código IBGE`, Mun, tot_geo, tot_hidro)
+
+datatable(Tot_Mun, colnames = c("Geocódigo", "Município", "Alertas Geológicos", "Alertas Hidrológicos"))
 
 ```
 
@@ -92,6 +97,11 @@ Med_Geral <- Med_GdReg_data %>%
   bind_rows(Med_Pais_geral) %>%
   mutate(GdReg = factor(GdReg, levels = c("Brasil", "N", "NE", "SE", "S", "CO")))
 
+Med_Geral %>% 
+  filter(Tipo == "Event") %>%
+  mutate(Media = round(Media, 2)) %>%
+  pivot_wider(id_cols = GdReg, names_from = mes, values_from = Media) %>%
+  datatable()
 ```
 
 ## Produção dos gráficos estáticos
@@ -130,6 +140,7 @@ lineScale <- scale_linetype_manual(name = "GdReg", labels = c("Brasil", "Norte",
 #| label: fig-hidro
 #| fig-cap: Hidrológico
 
+
 graf_hidro <- Med_Geral %>%
   filter(Tipo == "hidro") %>%
   ggplot(aes(x = mes, y = Media, colour = GdReg, group = GdReg, linetype = GdReg)) +
@@ -148,6 +159,7 @@ graf_hidro
 ```{r}
 #| label: fig-geo
 #| fig-cap: Geológico
+
 
 graf_geo <- Med_Geral %>%
   filter(Tipo == "geo") %>%
@@ -168,6 +180,9 @@ Ainda tenho que ver como definir o tamanho individual das figuras. Por enquanto 
 ```{r}
 #| label: fig-geral
 #| fig-cap: Geral
+#| fig-column: screen
+#| fig-width : 12
+
 
 graf_geral <- Med_Geral %>%
   filter(Tipo == "Event") %>%
@@ -194,24 +209,21 @@ Existem muitas possibilidades de interatividade, em tabelas, gráficos e mapas. 
 Carrega a biblioteca *bertin.js* para a produção de mapas
 ```{ojs}
 
-bertin = require("bertin")
-```
-
-### Fonte de dados
-Carrega o JSON servido pelo serviço WFS do geoserver do IBGE. Ver [aqui](https://geoservicos.ibge.gov.br/geoserver/web/wicket/bookmarkable/org.geoserver.web.demo.MapPreviewPage?1&filter=false) a lista de serviços disponibilizada pelo IBGE. Tem bastante coisa! No caso das BATERs, elas já vêm com os variáveis da publicação, além da geometria. A grande vantagem de usar o serviço wfs é não precisar manter as camadas espaciais que forem utilizadas na parte interativa no repositório do site, economizando muito espaço de armazenamento.
-```{ojs}
-
-jsonURL = "https://geoservicos.ibge.gov.br/geoserver/CGEO/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=CGEO%3APARBR2018_BATER_MD&maxFeatures=600000&outputFormat=application%2Fjson"
-
-bater = d3.json(jsonURL)
+bertin = require("bertin@1.5.9");
 ```
 
 ### Input
 Aqui é criado a caixinha de seleção do município. O ideal é fazer um de UF antes pra reduzir a lista resultante. Depois eu faço, na camada WFS das BATERs não tem a sigla da UF, só o geocódigo, mais difícil de escolher a UF né. Só botar uma tabelinha com isso e fazer o join que resolve.
-```{ojs}
+<!-- ```{ojs}
+
+MUNICjsonURL = "https://geoservicos.ibge.gov.br/geoserver/CGEO/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=CGEO%3APARBR2018_SedeMunicipal&maxFeatures=600000&outputFormat=application%2Fjson"
+
+municipios = d3.json(MUNICjsonURL)
+
+// Inputs.table(municipios) 
 
 viewof selmun = Inputs.select(
-  bater.features.map((d) => d.properties.municipio),
+  municipios.features.map((d) => d.properties.),
   {
     sort: true,
     unique: true,
@@ -219,24 +231,35 @@ viewof selmun = Inputs.select(
   }
 )
 
-municipioArray = bater.features.filter((d) => d.properties.municipio == selmun)
-```
+// Inputs.table(municipios) 
+
+// municipioArray = municipios.features.filter((d) => d.properties.municipio == selmun)
+``` -->
+
+### Fonte de dados
+Carrega o JSON servido pelo serviço WFS do geoserver do IBGE. Ver [aqui](https://geoservicos.ibge.gov.br/geoserver/web/wicket/bookmarkable/org.geoserver.web.demo.MapPreviewPage?1&filter=false) a lista de serviços disponibilizada pelo IBGE. Tem bastante coisa! No caso das BATERs, elas já vêm com os variáveis da publicação, além da geometria. A grande vantagem de usar o serviço wfs é não precisar manter as camadas espaciais que forem utilizadas na parte interativa no repositório do site, economizando muito espaço de armazenamento.
+<!-- ```{ojs}
+
+BATERjsonURL = "https://geoservicos.ibge.gov.br/geoserver/CGEO/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=CGEO%3APARBR2018_BATER_MD&maxFeatures=600000&outputFormat=application%2Fjson"
+
+bater = d3.json(BATERjsonURL)
+``` -->
 
 ### Filtragem
 Aqui as feições são filtradas segundo o município selecionado. O correto na verdade é aplicar o filtro antes de requisitar a camada wfs pra diminuir o tráfego de dados. Do jeito que está demora para carregar inicialmente o mapa, tem todo o tempo de recebimento da camada completa wfs do IBGE. Depois eu vejo como fazer.
-```{ojs}
+<!-- ```{ojs}
 
 municipio = ({
   "type":"FeatureCollection",
   "features":municipioArray  
 })
-```
+``` -->
 
 ### Mapa
 Aqui produz o mapa com as BATERs do município selecionado. A biblioteca [*bertin*](https://observablehq.com/collection/@neocartocnrs/bertin) é mais pra produzir cartogramas, não dá pra "passear" pelo mapa. Mas pode-se fazer, por exemplo, janelinhas *pop up* com os dados da BATER que aparecem ao clicar na mesma. Existem outras bibliotecas para trabalhar com mapas, a [*plot*](https://observablehq.com/@observablehq/plot) que é parecida com a *bertin*, e algumas de mapas mesmo, [*openlayer*](https://observablehq.com/@mbostock/hello-openlayers), [*leaflet*](https://observablehq.com/@tmcw/leaflet) e [*mapbox*](https://observablehq.com/@tmcw/using-mapbox-gl-js). Devo utilizar no final a a *openlayer* ou a *leaflet*.
 
 Além de mapas, dá pra produzir as tabelas interativas (a pessoa pode filtrar por qualquer campo, por exemplo, e ordenar por qualquer coluna) e gráficos também. E tudo isso rodando no navegador, sem precisar de um servidor com interpretador de *R* ou *Python* instalados, com as bibliotecas como [*Shiny*](https://shiny.rstudio.com/) ou [*Dash*](https://dash.plotly.com/) nas versões certas e dispor de tempo de processador para processar as ações de todos os usuários simultâneos... O servidor só precisa servir o site, e nada mais. 
-```{ojs}
+<!-- ```{ojs}
 
 simplemap = bertin.draw({
   params: { background: "#bde1f0", margin: 10 },
@@ -258,4 +281,4 @@ simplemap = bertin.draw({
 })
 
 
-```
+``` -->

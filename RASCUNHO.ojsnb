@@ -1,0 +1,148 @@
+{
+    "id": "99f957308d2a79c6",
+    "slug": null,
+    "trashed": false,
+    "description": "",
+    "likes": 0,
+    "publish_level": "live",
+    "forks": 0,
+    "fork_of": null,
+    "has_importers": false,
+    "update_time": "2022-12-22T18:29:34.092Z",
+    "first_public_version": 2,
+    "paused_version": null,
+    "publish_time": null,
+    "publish_version": 175,
+    "latest_version": 175,
+    "thumbnail": null,
+    "default_thumbnail": null,
+    "roles": [],
+    "sharing": null,
+    "edits": [
+        {
+            "node_id": 11,
+            "value": "simplemap = bertin.draw({\n  params: { background: \"#bde1f0\", margin: 10 },\n  layers: [{\n      type: \"layer\",\n      geojson: municipio,\n      fill: \"#ff0000\",\n      stroke: \"#ff0000\",\n      strokeWidth: 1,\n      symbol: \"square\",\n      symbol_size: 50\n    },\n    {\n      type: \"tiles\",\n      opacity: 1,\n      style: \"openstreetmap\",\n    }\n  ]\n})\n    \n"
+        }
+    ],
+    "owner": {
+        "id": "5cc10ebf9e8f8d35",
+        "github_login": "jazzyjones",
+        "avatar_url": "https://avatars.observableusercontent.com/avatar/19e317984c15c9a84770975a62b67b75ebc1e8e1e05e9ce0c80614482a1ae580",
+        "login": "jazzyjones",
+        "name": "Jz-Jon",
+        "bio": "",
+        "home_url": "",
+        "type": "individual",
+        "tier": "public",
+        "following_count": 0,
+        "followers_count": 0,
+        "following": false
+    },
+    "creator": {
+        "id": "5cc10ebf9e8f8d35",
+        "github_login": "jazzyjones",
+        "avatar_url": "https://avatars.observableusercontent.com/avatar/19e317984c15c9a84770975a62b67b75ebc1e8e1e05e9ce0c80614482a1ae580",
+        "login": "jazzyjones",
+        "name": "Jz-Jon",
+        "bio": "",
+        "home_url": "",
+        "tier": "public",
+        "following_count": 0,
+        "followers_count": 0,
+        "following": false
+    },
+    "authors": [
+        {
+            "id": "5cc10ebf9e8f8d35",
+            "avatar_url": "https://avatars.observableusercontent.com/avatar/19e317984c15c9a84770975a62b67b75ebc1e8e1e05e9ce0c80614482a1ae580",
+            "name": "Jz-Jon",
+            "login": "jazzyjones",
+            "bio": "",
+            "home_url": "",
+            "github_login": "jazzyjones",
+            "tier": "public",
+            "approved": true,
+            "description": "",
+            "following_count": 0,
+            "followers_count": 0,
+            "following": false
+        }
+    ],
+    "collections": [],
+    "files": [],
+    "comments": [],
+    "commenting_lock": null,
+    "suggestion_from": null,
+    "suggestions_to": [],
+    "version": 175,
+    "title": "Testando mapa dos municípios",
+    "license": null,
+    "copyright": "",
+    "nodes": [
+        {
+            "id": 0,
+            "name": "",
+            "value": "# Testando código do piloto - divulgação das estatísticas de risco",
+            "pinned": false,
+            "mode": "md",
+            "data": null,
+            "outputs": []
+        },
+        {
+            "id": "e88de1c9-0427-4944-80f3-601e95057ccb",
+            "name": "",
+            "value": "O objetivo é desenvolver a parte interativa do piloto para a proposta de divulgação das estatísticas de risco.\r\nO ambiente de notebook do **Observable.js** disponibiliza algumas facilidades na produção do código e visualização do resultado não disponíveis ainda no *Quarto*. O protótipo da parte interativa é feito aqui e depois inserido no documento para publicação em sítio eletrônico.\r\nDeve-se se atentar à semelhança entre dados utilizados no *Observable notebook* e os produzidos pelo código *R* em ambiente *Quarto* no desenvolvimento da ferramentas interativas.",
+            "mode": "md",
+            "outputs": []
+        },
+        {
+            "id": "a17d0af0-44cb-4150-b1b4-a61948384b96",
+            "name": "",
+            "value": "bertin = require(\"bertin@1\");",
+            "mode": "js",
+            "outputs": []
+        },
+        {
+            "id": 167,
+            "name": null,
+            "value": "function stripAccents(str) {\r\n    var reAccents = /[àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ]/g;\r\n    var replacements = 'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY';\r\n    return str.replace(reAccents, function (match) {\r\n        return replacements[reAccents.source.indexOf(match)];\r\n    });\r\n}",
+            "pinned": true,
+            "mode": "js",
+            "data": null,
+            "outputs": []
+        },
+        {
+            "id": "0ffce352-945d-4f45-902d-4f283329923c",
+            "name": "",
+            "value": "\r\njsonURL = \"https://geoservicos.ibge.gov.br/geoserver/CGEO/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=CGEO%3APARBR2018_BATER_MD&maxFeatures=600000&outputFormat=application%2Fjson\"\r\n\r\nviewof selmun = Inputs.select(\r\n  bater.features.map((d) => d.properties.municipio),\r\n  {\r\n    sort: true,\r\n    unique: true,\r\n    label: \"Município\"\r\n  }\r\n)\r\n\r\nmunicipioArray = bater.features.filter((d) => d.properties.municipio == selmun);\r\n\r\nbater = d3.json(jsonURL)\r\n\r\nmunicipio = ({\r\n  \"type\":\"FeatureCollection\",\r\n  \"features\":municipioArray  \r\n})",
+            "mode": "js",
+            "outputs": []
+        },
+        {
+            "id": 57,
+            "name": null,
+            "value": "estadosNomeURL = \"https://geoservicos.ibge.gov.br/geoserver/CGMAT/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=CGMAT%3Apbqg22_02_Estado_NomUF&PROPERTYNAME=cd_uf,nm_uf&maxFeatures=600000&outputFormat=application%2Fjson\"\r\n\r\nnomUF = d3.json(estadosNomeURL)",
+            "pinned": true,
+            "mode": "js",
+            "data": null,
+            "outputs": []
+        },
+        {
+            "id": "38e54568-95c7-43a9-a37d-c37ff892985f",
+            "name": "",
+            "value": "// MUNICjsonURL = \"https://geoservicos.ibge.gov.br/geoserver/CGEO/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=CGEO%3APARBR2018_SedeMunicipal&maxFeatures=600000&outputFormat=application%2Fjson\"\r\n\r\n// SEDMUNjsonURL = \"https://geoservicos.ibge.gov.br/geoserver/CGEO/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=CGEO%3APARBR2018_SedeMunicipal&maxFeatures=600000&outputFormat=application%2Fjson\"\r\n\r\n// municipios = d3.json(MUNICjsonURL)\r\n\r\n\r\nviewof selUF = Inputs.select(\r\n  nomUF.features.map((d) => d.properties.cd_uf + \" \" + d.properties.nm_uf),\r\n  {\r\n    sort: true,\r\n    unique: true,\r\n    label: \"UF\"\r\n  }\r\n)",
+            "mode": "js",
+            "outputs": []
+        },
+        {
+            "id": 11,
+            "name": null,
+            "value": "simplemap = bertin.draw({\r\n  params: { background: \"#bde1f0\", margin: 10 },\r\n  layers: [{\r\n      type: \"layer\",\r\n      geojson: municipio,\r\n      fill: \"#ff0000\",\r\n      stroke: \"#ff0000\",\r\n      strokeWidth: 1,\r\n      symbol: \"square\",\r\n      symbol_size: 50\r\n    },\r\n    {\r\n      type: \"tiles\",\r\n      opacity: 1,\r\n      style: \"openstreetmap\",\r\n    }\r\n  ]\r\n})\r\n",
+            "pinned": true,
+            "mode": "js",
+            "data": null,
+            "outputs": []
+        }
+    ],
+    "resolutions": []
+}
