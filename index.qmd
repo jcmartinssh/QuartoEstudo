@@ -207,68 +207,124 @@ Existem muitas possibilidades de interatividade, em tabelas, gráficos e mapas. 
 
 ### Bibliotecas
 Carrega a biblioteca *bertin.js* para a produção de mapas
+
 ```{ojs}
 
-bertin = require("bertin@1.5.9");
+bertin = require("bertin@1");
 ```
 
 ### Input
 Aqui é criado a caixinha de seleção do município. O ideal é fazer um de UF antes pra reduzir a lista resultante. Depois eu faço, na camada WFS das BATERs não tem a sigla da UF, só o geocódigo, mais difícil de escolher a UF né. Só botar uma tabelinha com isso e fazer o join que resolve.
-<!-- ```{ojs}
 
-MUNICjsonURL = "https://geoservicos.ibge.gov.br/geoserver/CGEO/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=CGEO%3APARBR2018_SedeMunicipal&maxFeatures=600000&outputFormat=application%2Fjson"
+```{ojs}
 
-municipios = d3.json(MUNICjsonURL)
+viewof selNomUF = Inputs.select(
+    listaUF.data.features.map((d) => d.properties.nm_uf), 
+    {
+        label: "Unidade da Federação"
+    }
+);
 
-// Inputs.table(municipios) 
-
-viewof selmun = Inputs.select(
-  municipios.features.map((d) => d.properties.),
-  {
-    sort: true,
-    unique: true,
-    label: "Município"
-  }
+viewof selNomMunic = Inputs.select(
+    MunicUF.data.features.map((d) => d.properties.nommunic),
+    {
+        label: "Município"
+    }
 )
 
-// Inputs.table(municipios) 
+```
 
-// municipioArray = municipios.features.filter((d) => d.properties.municipio == selmun)
-``` -->
+### Fonte de dados e filtragem ___REVISAR___
 
-### Fonte de dados
 Carrega o JSON servido pelo serviço WFS do geoserver do IBGE. Ver [aqui](https://geoservicos.ibge.gov.br/geoserver/web/wicket/bookmarkable/org.geoserver.web.demo.MapPreviewPage?1&filter=false) a lista de serviços disponibilizada pelo IBGE. Tem bastante coisa! No caso das BATERs, elas já vêm com os variáveis da publicação, além da geometria. A grande vantagem de usar o serviço wfs é não precisar manter as camadas espaciais que forem utilizadas na parte interativa no repositório do site, economizando muito espaço de armazenamento.
-<!-- ```{ojs}
+As feições são filtradas segundo o município selecionado. O correto na verdade é aplicar o filtro antes de requisitar a camada wfs pra diminuir o tráfego de dados. Do jeito que está demora para carregar inicialmente o mapa, tem todo o tempo de recebimento da camada completa wfs do IBGE. Depois eu vejo como fazer.
 
-BATERjsonURL = "https://geoservicos.ibge.gov.br/geoserver/CGEO/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=CGEO%3APARBR2018_BATER_MD&maxFeatures=600000&outputFormat=application%2Fjson"
+```{ojs}
 
-bater = d3.json(BATERjsonURL)
-``` -->
+urlWFS = "https://geoservicos.ibge.gov.br/geoserver/ows";
 
-### Filtragem
-Aqui as feições são filtradas segundo o município selecionado. O correto na verdade é aplicar o filtro antes de requisitar a camada wfs pra diminuir o tráfego de dados. Do jeito que está demora para carregar inicialmente o mapa, tem todo o tempo de recebimento da camada completa wfs do IBGE. Depois eu vejo como fazer.
-<!-- ```{ojs}
+listaUF = await wfsRequest(urlWFS, "GetFeature", {
+  service: "WFS",
+  version: "2.0.0",
+  typeNames: "CGMAT:pbqg22_02_Estado_NomUF",
+  PropertyName: "cd_uf,nm_uf",
+  outputFormat: "application/json"
+});
 
-municipio = ({
+geo_uf = await wfsRequest(urlWFS, "GetFeature", {
+  service: "WFS",
+  version: "2.0.0",
+  typeNames: "CGMAT:pbqg22_02_Estado_NomUF",
+  cql_filter: `nm_uf='${selNomUF}'`,
+  outputFormat: "application/json"
+});
+
+MunicUF = await wfsRequest(urlWFS, "GetFeature", {
+  service: "WFS",
+  version: "2.0.0",
+  typeNames: "CGEO:PARBR2018_Municipios_mapeados",
+  cql_filter: `uf='${selUF}'`,
+  outputFormat: "application/json"
+});
+
+bater = await wfsRequest(urlWFS, "GetFeature", {
+  service: "WFS",
+  version: "2.0.0",
+  typeNames: "CGEO:PARBR2018_BATER_MD",
+  cql_filter: `geo_mun='${selCdMunic}'`,
+  outputFormat: "application/json"
+});
+
+selUF = stripAccents(selNomUF);
+
+selCdMunic = MunicUF.data.features.filter((d) => d.properties.nommunic === selNomMunic)[0].properties.codmunic;
+
+selMunicArray = MunicUF.data.features.filter((d) => d.properties.nommunic == selNomMunic);
+
+selMunic = ({
   "type":"FeatureCollection",
-  "features":municipioArray  
-})
-``` -->
+  "features":selMunicArray  
+});
+
+
+```
+
 
 ### Mapa
 Aqui produz o mapa com as BATERs do município selecionado. A biblioteca [*bertin*](https://observablehq.com/collection/@neocartocnrs/bertin) é mais pra produzir cartogramas, não dá pra "passear" pelo mapa. Mas pode-se fazer, por exemplo, janelinhas *pop up* com os dados da BATER que aparecem ao clicar na mesma. Existem outras bibliotecas para trabalhar com mapas, a [*plot*](https://observablehq.com/@observablehq/plot) que é parecida com a *bertin*, e algumas de mapas mesmo, [*openlayer*](https://observablehq.com/@mbostock/hello-openlayers), [*leaflet*](https://observablehq.com/@tmcw/leaflet) e [*mapbox*](https://observablehq.com/@tmcw/using-mapbox-gl-js). Devo utilizar no final a a *openlayer* ou a *leaflet*.
 
 Além de mapas, dá pra produzir as tabelas interativas (a pessoa pode filtrar por qualquer campo, por exemplo, e ordenar por qualquer coluna) e gráficos também. E tudo isso rodando no navegador, sem precisar de um servidor com interpretador de *R* ou *Python* instalados, com as bibliotecas como [*Shiny*](https://shiny.rstudio.com/) ou [*Dash*](https://dash.plotly.com/) nas versões certas e dispor de tempo de processador para processar as ações de todos os usuários simultâneos... O servidor só precisa servir o site, e nada mais. 
-<!-- ```{ojs}
+```{ojs}
 
-simplemap = bertin.draw({
+mapauf = bertin.draw({
   params: { background: "#bde1f0", margin: 10 },
   layers: [{
       type: "layer",
-      geojson: municipio,
+      geojson: selMunic,
+      fill: "#000000",      
+      fillOpacity: 0.8,
+      stroke: "#000000",
+      strokeWidth: 2,
+      symbol: "square",
+      symbol_size: 50
+    },
+    {
+      type: "layer",
+      geojson: MunicUF.data,
       fill: "#ff0000",
+      fillOpacity: 0.6,
       stroke: "#ff0000",
       strokeWidth: 1,
+      symbol: "square",
+      symbol_size: 50
+    },
+    {
+      type: "layer",
+      geojson: geo_uf.data,
+      fill: "#999999",      
+      fillOpacity: 0.25,
+      stroke: "#777777",
+      strokeWidth: 2,
       symbol: "square",
       symbol_size: 50
     },
@@ -278,7 +334,78 @@ simplemap = bertin.draw({
       style: "openstreetmap",
     }
   ]
-})
+});
+
+mapamunic = bertin.draw({
+  params: { background: "#bde1f0", margin: 10 },
+  layers: [{
+      type: "layer",
+      geojson: bater.data,
+      fill: "#ff0000",
+      fillOpacity: 0.6,
+      stroke: "#ff0000",
+      strokeWidth: 1,
+      symbol: "square",
+      symbol_size: 50
+    },
+    {
+      type: "layer",
+      geojson: selMunic,
+      fill: "#999999",      
+      fillOpacity: 0.25,
+      stroke: "#777777",
+      strokeWidth: 2,
+      symbol: "square",
+      symbol_size: 50
+    },
+    {
+      type: "tiles",
+      opacity: 1,
+      style: "openstreetmap",
+    }
+  ]
+});
 
 
-``` -->
+```
+
+### Funções utilizadas
+
+```{ojs}
+
+async function wfsRequest(
+  url,
+  operation = "GetCapabilities",
+  extraParameters = {}
+) {
+  const queryParameters = new URLSearchParams({
+    request: operation,
+    service: "WFS",
+    ...extraParameters
+  }).toString();
+
+  console.log(queryParameters);
+
+  const response = await fetch(`${url}?${queryParameters}`);
+  const responseFormat = response.headers.get("Content-Type");
+
+  // If the WFS server returns Content-Type header containing "json" it will read the data as json, otherwise as text.
+  const data = responseFormat.includes("json")
+    ? await response.json()
+    : await response.text();
+
+  return {
+    data: data,
+    status: response.status
+  };
+};
+
+function stripAccents(str) {
+    var reAccents = /[àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ]/g;
+    var replacements = 'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY';
+    return str.replace(reAccents, function (match) {
+        return replacements[reAccents.source.indexOf(match)];
+    });
+};
+
+```
