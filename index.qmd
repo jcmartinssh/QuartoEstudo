@@ -209,7 +209,7 @@ graf_geral
 Ainda vou testar as possibilidades de produção de gráficos interativos.
 
 ### Mapas
-primeiro carrega as bibliotecas do *Observable*. Foram usadas a [*bertin*](https://github.com/neocarto/bertin) para produção de cartogramas e [*Leaflet*](https://leafletjs.com/) para a incorporação de mapas com *pan* e *zoom*.
+primeiro carrega as bibliotecas do *Observable*. Foram usadas a [*bertin*](https://github.com/neocarto/bertin) para produção de cartogramas e [*Leaflet*](https://leafletjs.com/) para a incorporação de mapas com *pan* e *zoom*. 
 ```{ojs}
 
 bertin = require("bertin@1");
@@ -222,6 +222,70 @@ html` <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.
    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
    crossorigin=""/>`
 ```
+
+:::{.column-margin}
+Dá para colocar texto e figuras em margem, etc. Usa o [*bootstrap*](https://getbootstrap.com/) para formatar o conteúdo html.
+
+
+
+```{ojs}
+
+
+viewof selNomUF = Inputs.select(
+    listaUF.data.features.map((d) => d.properties.nm_uf), 
+    {
+        label: "Unidade da Federação"
+    }
+);
+```
+
+
+As ferramentas de layout são relativamente simples, mas podem ser trabalhadas com mais detalhe utilizando *html* e *css*.
+
+```{ojs}
+
+mapauf = bertin.draw({
+  params: { background: "#bde1f0", margin: 10 },
+  layers: [{
+      type: "layer",
+      geojson: selMunic,
+      fill: "#ff0000",      
+      fillOpacity: 1,
+      stroke: "#000000",
+      strokeWidth: 2,
+      symbol: "square",
+      symbol_size: 50
+    },
+    {
+      type: "layer",
+      geojson: MunicUF.data,
+      fill: "#000000",
+      fillOpacity: 0.0,
+      stroke: "#ff0000",
+      strokeWidth: 3,
+      symbol: "square",
+      symbol_size: 50
+    },
+    {
+      type: "layer",
+      geojson: geo_uf.data,
+      fill: "#999999",      
+      fillOpacity: 0.25,
+      stroke: "#777777",
+      strokeWidth: 3,
+      symbol: "square",
+      symbol_size: 50
+    },
+    {
+      type: "tiles",
+      opacity: 1,
+      style: "openstreetmap",
+    }
+  ]
+});
+```
+
+:::
 
 As camadas utilizadas são obtidas dos geoserviços do IBGE. Para reduzir a transferência de dados, só são requisitados do servidor os dados necessários para construir as listas e mapa mosca das UFs e Municípios e representar as BATERs do município selecionado, através dos campos *PropertyName* e *cql_filter*.
 
@@ -275,66 +339,14 @@ selMunic = ({
 
 ```
 
-
-
+Essa tabela pode funcionar como seleção do município...
 ```{ojs}
-//| column: margin
 
-viewof selNomUF = Inputs.select(
-    listaUF.data.features.map((d) => d.properties.nm_uf), 
-    {
-        label: "Unidade da Federação"
-    }
-);
+viewof tabMunic = Inputs.table(MunicUF.data.features.map((d) => d.properties));
+
 ```
 
-
-
-```{ojs}
-//| column: margin
-mapauf = bertin.draw({
-  params: { background: "#bde1f0", margin: 10 },
-  layers: [{
-      type: "layer",
-      geojson: selMunic,
-      fill: "#ff0000",      
-      fillOpacity: 1,
-      stroke: "#000000",
-      strokeWidth: 2,
-      symbol: "square",
-      symbol_size: 50
-    },
-    {
-      type: "layer",
-      geojson: MunicUF.data,
-      fill: "#000000",
-      fillOpacity: 0.0,
-      stroke: "#ff0000",
-      strokeWidth: 3,
-      symbol: "square",
-      symbol_size: 50
-    },
-    {
-      type: "layer",
-      geojson: geo_uf.data,
-      fill: "#999999",      
-      fillOpacity: 0.25,
-      stroke: "#777777",
-      strokeWidth: 3,
-      symbol: "square",
-      symbol_size: 50
-    },
-    {
-      type: "tiles",
-      opacity: 1,
-      style: "openstreetmap",
-    }
-  ]
-});
-```
-
-
-
+... ao invés dessa caixinha de seleção.
 ```{ojs}
 viewof selNomMunic = Inputs.select(
     MunicUF.data.features.map((d) => d.properties.nommunic),
@@ -343,6 +355,7 @@ viewof selNomMunic = Inputs.select(
     }
 )
 ```
+
 :::{.column-screen-inset}
 
 ```{ojs}
@@ -361,7 +374,7 @@ mapaInterativo = {
     weight: 5,
     color: '#ff0000'
   }).addTo(map);
-  baterLayer.bindPopup("Aqui aparecem os dados da bater");
+  baterLayer.bindPopup("aqui aparecem dados da BATER");
   map.fitBounds(baterLayer.getBounds());
 }
 
