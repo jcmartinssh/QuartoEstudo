@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "QuartoEstudo"
+  title: "Divulgação de estatísticas de população em áreas de risco"
   navbar:
     left:
       - href: index.qmd

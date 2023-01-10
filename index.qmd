@@ -1,7 +1,7 @@
 ---
-title: "Teste de funcionalidade ***Quarto***\npara sítio eletrônico com recursos interativos"
+title: "Avaliação preliminar de funcionalidades do sistema [*Quarto*](https://quarto.org/) para publicação de estatísticas da população em área de risco."
 author: "Joaquim"
-date: "12/19/2022"
+date: "01/10/2022"
 format: 
   html: 
     code-fold: true
@@ -13,14 +13,20 @@ execute:
   cache: true
   freeze: true
 ---
-# Dados de alertas de risco de desastres enviados pelo CEMADEN.
+## Introdução
 
-A ideia é juntar a divulgação "estática" — com uma breve explanação de um conjunto de variáveis das BATERs relacionadas num tema, com revisão na bibliografia do uso dessas variáveis e outras considerações, analisando os resultados observados na escala nacional e de grandes regiões, podendo citar alguns casos de UF — com uma parte interativa, disponibilizando os dados agregados por UF e município, juntamente com um mapa com as BATERs do município selecionado com as feições *clicáveis*, abrindo uma caixinha de texto com as informações básicas da BATER e as variáveis da mesma exploradas no tema da publicação.
+[*Quarto*](https://quarto.org/) é um sistema de produção de publicações técnicas e científicas que incorpora ferramentas de formatação de texto com códigos de programação para produção de gráficos e tabelas. É o sucessor do [*R markdown*](https://rmarkdown.rstudio.com/) e segue a linha de outros *notebooks* reativos, como o [*Jupyter Notebook*](https://jupyter.org/). É um sistema de código aberto cujos principais destques são permitir a utilização de diversas linguagens de programação ([*Python*](https://www.python.org/), [*R*](https://www.r-project.org/), [*Julia*](https://julialang.org/) e [*Observable*](https://observablehq.com/)) e a exportação para diversos formatos de publicação através da utilização do [*Pandoc*](https://pandoc.org/).
 
-## Processamento dos dados através do *R*
+As suas funcionalidades relativas ao processamento de dados espaciais e tabulares com linguagens de programação e produção de documentos em .pdf ou .doc já são interessantes por facilitar a padronização da análise e publicação de resultados. Mas são sua integração com o *Observable* e capacidade de produção de documentos *html* que oferecem as maiores possibilidades de enriquecimento da publicação com conteúdo dinâmico e interativo.
 
-### Bibliotecas
-Carrega as bibliotecas necessárias. São muitas, nesse caso.
+Elementos interativos como listas de seleção, tabelas, e gráficos, etc, produzidos nas linguagens *Python*, *R* ou *Julia* possuem recursos limitados de interatividade em publicações *online*, necessitando de *frameworks* como o [*Dash*](https://dash.plotly.com/) ou o [*Shiny*](https://shiny.rstudio.com/) para poderem apresentar comportamento realmente dinâmico. Esses *frameworks* exigem a configuração do servidor de hospedagem com os interpretadores e bibliotecas e também de tempo de processamento para atender requisições dos usuários, dificultando a utilização dessas capacidades na publicação de resultados de pesquisas. O *Observable*, porém, é um *JavaScript melhorado* que é interpretado diretamente pelo navegador do usuário, dispensando a utilização do servidor no processamento dos dados. Essa característica, associada à utilização de [geoserviços do IBGE](https://geoservicos.ibge.gov.br), permite desde a publicação enriquecida com conteúdo interativo até a produção de *dashboards* complexos com dados de diversas fontes sem a necessidade de gastos com servidor e apoio institucional.
+
+## Exemplos de funcionalidades
+
+Para avaliar algumas funcionalidades de maior relevância, foram utilizados os dados de Alertas de riscos de desastres emitidos pelo CEMADEN compilados para o Atlas Nacional Digital do Brasil - 2022.
+
+### Dados e Bibliotecas
+Carrega a tabela com os dados e as bibliotecas utilizadas.
 
 ```{r}
 #| warning: false
@@ -34,21 +40,14 @@ library(clock)
 library(ggthemes)
 library(showtext)
 library(RColorBrewer)
-
-```
-
-### Dados
-Carrega a tabela do Excel com os dados.
-```{r}
-#| warning: false
+library(knitr)
 
 planilha <- read_excel("W:/DGC_ACERVO_CGEO/PROJETOS_EM_ANDAMENTO/Cemaden/BOLSISTAS/Joaquim/AtlasNacional/Alertas/AlertasCemaden2012-2021.xlsx")
 
-# datatable(planilha)
 ```
 
-### Agregação
-Produz a tabela de total de alertas por município.
+### Tabelas
+Tabela processada em *R* e apresentada de maneira estática.
 ```{r}
 #| warning: false
 
@@ -61,12 +60,25 @@ Tot_Mun <- planilha %>%
   mutate(tot_geo = Geo + Hidrogeo, tot_hidro = Hidro + Hidrogeo) %>%
   select(`Código IBGE`, Mun, tot_geo, tot_hidro)
 
-datatable(Tot_Mun, colnames = c("Geocódigo", "Município", "Alertas Geológicos", "Alertas Hidrológicos"))
+kable(head(Tot_Mun))
+```
+Essa tabela pode ser apresentada de maneira dinâmica com a biblioteca [*DT*](https://rstudio.github.io/DT/).
+```{r}
+#| warning: false
+datatable(Tot_Mun)
 
 ```
+Ou ainda pelo *Observable*.
+```{r}
+#| cache: false
+ojs_define(totais = Tot_Mun)
+```
+```{ojs}
+viewof tabexemp = Inputs.table(transpose(totais));
 
-### Processamento
-Calcula as médias mensais por grande região e país e junta tudo numa mesma tabela, *Med_Geral*.
+```
+### Gráficos
+Agregação de dados no *R* para a produção de gráficos estáticos.
 ```{r}
 
 Med_GdReg_data <- planilha %>%
@@ -107,11 +119,7 @@ Med_Geral %>%
   pivot_wider(id_cols = GdReg, names_from = mes, values_from = Media) %>%
   datatable()
 ```
-
-## Produção dos gráficos estáticos
-
-### Tema
-Carrega configurações de tema para os gráficos, desenvolvido pro Atlas Nacional Digital.
+Configurações de tema e estilo - desenvolvido pro Atlas Nacional Digital 2022.
 ```{r}
 
 showtext_auto()
@@ -137,8 +145,7 @@ colScale <- scale_color_manual(name = "GdReg", labels = c("Brasil", "Norte", "No
 lineScale <- scale_linetype_manual(name = "GdReg", labels = c("Brasil", "Norte", "Nordeste", "Sudeste", "Sul", "Centro-Oeste"), values = c(2, 1, 1, 1, 1, 1))
 
 ```
-
-### Alertas Hidrológicos
+Alertas Hidrológicos.
 ```{r}
 #| label: fig-hidro
 #| fig-cap: Hidrológico
@@ -157,8 +164,7 @@ graf_hidro <- Med_Geral %>%
 
 graf_hidro
 ```
-
-### Alertas Geológicos
+Alertas Geológicos.
 ```{r}
 #| label: fig-geo
 #| fig-cap: Geológico
@@ -177,9 +183,7 @@ graf_geo <- Med_Geral %>%
 
 graf_geo
 ```
-
-### Alertas
-Ainda tenho que ver como definir o tamanho individual das figuras. Por enquanto tá definido globalmente, no início do documento, e em polegadas, eca.
+Alertas.
 ```{r}
 #| label: fig-geral
 #| fig-cap: Geral
@@ -202,25 +206,18 @@ graf_geral <- Med_Geral %>%
 
 graf_geral
 ```
+Ainda vou testar as possibilidades de produção de gráficos interativos.
 
-Dá pra referenciar as imagens no texto, @fig-hidro, @fig-geo e @fig-geral.
-
-## Interatividade
-Existem muitas possibilidades de interatividade, em tabelas, gráficos e mapas. Teste primeiramente a produção de mapas, que me parece mais complexa. Para obter a interatividade rodando direto do navegador, deve-se utilizar o [**Observable**](https://observablehq.com/). Infelizmente o *proxy* do IBGE bloqueia! Vou pedir pra DI liberar depois.
-
-### Bibliotecas
-Carrega a biblioteca *bertin.js* para a produção de mapas
-
+### Mapas
+primeiro carrega as bibliotecas do *Observable*. Foram usadas a [*bertin*](https://github.com/neocarto/bertin) para produção de cartogramas e [*Leaflet*](https://leafletjs.com/) para a incorporação de mapas com *pan* e *zoom*.
 ```{ojs}
 
 bertin = require("bertin@1");
+L = require('leaflet@1.2.0');
+html`<link href='${resolve('leaflet@1.2.0/dist/leaflet.css')}' rel='stylesheet' />`
 ```
 
-
-### Fonte de dados e filtragem ___REVISAR___
-
-Carrega o JSON servido pelo serviço WFS do geoserver do IBGE. Ver [aqui](https://geoservicos.ibge.gov.br/geoserver/web/wicket/bookmarkable/org.geoserver.web.demo.MapPreviewPage?1&filter=false) a lista de serviços disponibilizada pelo IBGE. Tem bastante coisa! No caso das BATERs, elas já vêm com os variáveis da publicação, além da geometria. A grande vantagem de usar o serviço wfs é não precisar manter as camadas espaciais que forem utilizadas na parte interativa no repositório do site, economizando muito espaço de armazenamento.
-As feições são filtradas segundo o município selecionado. O correto na verdade é aplicar o filtro antes de requisitar a camada wfs pra diminuir o tráfego de dados. Do jeito que está demora para carregar inicialmente o mapa, tem todo o tempo de recebimento da camada completa wfs do IBGE. Depois eu vejo como fazer.
+As camadas utilizadas são obtidas dos geoserviços do IBGE. Para reduzir a transferência de dados, só são requisitados do servidor os dados necessários para construir as listas e mapa mosca das UFs e Municípios e representar as BATERs do município selecionado, através dos campos *PropertyName* e *cql_filter*.
 
 ```{ojs}
 
@@ -272,12 +269,10 @@ selMunic = ({
 
 ```
 
-### Input
-Aqui é criado a caixinha de seleção do município. O ideal é fazer um de UF antes pra reduzir a lista resultante. Depois eu faço, na camada WFS das BATERs não tem a sigla da UF, só o geocódigo, mais difícil de escolher a UF né. Só botar uma tabelinha com isso e fazer o join que resolve.
+
 
 ```{ojs}
-//| column: screen-inset-shaded
-//| layout-ncol: 2
+//| column: margin
 
 viewof selNomUF = Inputs.select(
     listaUF.data.features.map((d) => d.properties.nm_uf), 
@@ -285,20 +280,9 @@ viewof selNomUF = Inputs.select(
         label: "Unidade da Federação"
     }
 );
-
-viewof selNomMunic = Inputs.select(
-    MunicUF.data.features.map((d) => d.properties.nommunic),
-    {
-        label: "Município"
-    }
-)
-
 ```
-
 ```{ojs}
-//| column: screen-inset-shaded
-//| layout-ncol: 2
-
+//| column: margin
 mapauf = bertin.draw({
   params: { background: "#bde1f0", margin: 10 },
   layers: [{
@@ -338,47 +322,50 @@ mapauf = bertin.draw({
     }
   ]
 });
+```
 
-mapamunic = bertin.draw({
-  params: { background: "#bde1f0", margin: 10 },
-  layers: [{
-      type: "layer",
-      geojson: bater.data,
-      fill: "#ff0000",
-      fillOpacity: 0.6,
-      stroke: "#ff0000",
-      strokeWidth: 1,
-      symbol: "square",
-      symbol_size: 50
-    },
+```{ojs}
+viewof selNomMunic = Inputs.select(
+    MunicUF.data.features.map((d) => d.properties.nommunic),
     {
-      type: "layer",
-      geojson: selMunic,
-      fill: "#999999",      
-      fillOpacity: 0.25,
-      stroke: "#777777",
-      strokeWidth: 2,
-      symbol: "square",
-      symbol_size: 50
-    },
-    {
-      type: "tiles",
-      opacity: 1,
-      style: "openstreetmap",
+        label: "Município"
     }
-  ]
-});
+)
+
+grandCentralMap = {
+  // You'll often see Leaflet examples initializing a map like L.map('map'),
+  // which tells the library to look for a div with the id 'map' on the page.
+  // In Observable, we instead create a div from scratch in this cell, so it's
+  // completely self-contained.
+  let container = DOM.element('div', { style: `width:${width/2}px;height:${width/3.2}px` });
+  
+  // Note that I'm yielding the container pretty early here: this allows the
+  // div to be placed on the page. This is important, because Leaflet uses
+  // the div's .offsetWidth and .offsetHeight to size the map. If I were
+  // to only return the container at the end of this method, Leaflet might
+  // get the wrong idea about the map's size.
+  yield container;
+  
+  // Now we create a map object and add a layer to it.
+  let map = L.map(container);
+  let osmLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png', {
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+  
+  let baterLayer = L.geoJson(bater.data, {
+    weight: 5,
+    color: '#432'
+  }).addTo(map);
+  baterLayer.bindPopup("Aqui entra dados da bater");
+  map.fitBounds(baterLayer.getBounds());
+}
+
 
 
 ```
 
-### Mapa
-Aqui produz o mapa com as BATERs do município selecionado. A biblioteca [*bertin*](https://observablehq.com/collection/@neocartocnrs/bertin) é mais pra produzir cartogramas, não dá pra "passear" pelo mapa. Mas pode-se fazer, por exemplo, janelinhas *pop up* com os dados da BATER que aparecem ao clicar na mesma. Existem outras bibliotecas para trabalhar com mapas, a [*plot*](https://observablehq.com/@observablehq/plot) que é parecida com a *bertin*, e algumas de mapas mesmo, [*openlayer*](https://observablehq.com/@mbostock/hello-openlayers), [*leaflet*](https://observablehq.com/@tmcw/leaflet) e [*mapbox*](https://observablehq.com/@tmcw/using-mapbox-gl-js). Devo utilizar no final a a *openlayer* ou a *leaflet*.
-
-Além de mapas, dá pra produzir as tabelas interativas (a pessoa pode filtrar por qualquer campo, por exemplo, e ordenar por qualquer coluna) e gráficos também. E tudo isso rodando no navegador, sem precisar de um servidor com interpretador de *R* ou *Python* instalados, com as bibliotecas como [*Shiny*](https://shiny.rstudio.com/) ou [*Dash*](https://dash.plotly.com/) nas versões certas e dispor de tempo de processador para processar as ações de todos os usuários simultâneos... O servidor só precisa servir o site, e nada mais. 
-
-### Tabelas _Observable.js_
-
+## Apêndice
+Funções do *Observable* utilizadas no código anterior. Devido à natureza reativa do *Observable*, a ordem dos códigos do mesmo no documento não tem importância.
 
 ```{ojs}
 
