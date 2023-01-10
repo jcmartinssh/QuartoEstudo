@@ -332,18 +332,9 @@ viewof selNomMunic = Inputs.select(
     }
 )
 
-grandCentralMap = {
-  // You'll often see Leaflet examples initializing a map like L.map('map'),
-  // which tells the library to look for a div with the id 'map' on the page.
-  // In Observable, we instead create a div from scratch in this cell, so it's
-  // completely self-contained.
-  let container = DOM.element('div', { style: `width:${width/2}px;height:${width/3.2}px` });
-  
-  // Note that I'm yielding the container pretty early here: this allows the
-  // div to be placed on the page. This is important, because Leaflet uses
-  // the div's .offsetWidth and .offsetHeight to size the map. If I were
-  // to only return the container at the end of this method, Leaflet might
-  // get the wrong idea about the map's size.
+mapaInterativo = {
+  let container = DOM.element('div', { style: `width:${width/2.35}px;height:${width/3.2}px` });
+ 
   yield container;
   
   // Now we create a map object and add a layer to it.
@@ -356,7 +347,7 @@ grandCentralMap = {
     weight: 5,
     color: '#432'
   }).addTo(map);
-  baterLayer.bindPopup("Aqui entra dados da bater");
+  baterLayer.bindPopup("Aqui aparecem os dados da bater");
   map.fitBounds(baterLayer.getBounds());
 }
 
