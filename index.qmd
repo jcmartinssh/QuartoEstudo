@@ -11,7 +11,7 @@ format:
 execute:
   warning: false
   cache: true
-  freeze: true
+ 
 ---
 ## Introdução
 
