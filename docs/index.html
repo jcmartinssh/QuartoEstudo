@@ -520,29 +520,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11" data-startfrom="215" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 214;"><span id="cb11-215"><a href="#cb11-215" aria-hidden="true" tabindex="-1"></a>bertin <span class="op">=</span> <span class="pp">require</span>(<span class="st">"bertin@1"</span>)<span class="op">;</span></span>
-<span id="cb11-216"><a href="#cb11-216" aria-hidden="true" tabindex="-1"></a>L <span class="op">=</span> <span class="pp">require</span>(<span class="st">'leaflet@1.2.0'</span>)<span class="op">;</span></span>
-<span id="cb11-217"><a href="#cb11-217" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;link href='</span><span class="sc">${</span><span class="fu">resolve</span>(<span class="st">'leaflet@1.2.0/dist/leaflet.css'</span>)<span class="sc">}</span><span class="vs">' rel='stylesheet' /&gt;`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11" data-startfrom="213" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 212;"><span id="cb11-213"><a href="#cb11-213" aria-hidden="true" tabindex="-1"></a>bertin <span class="op">=</span> <span class="pp">require</span>(<span class="st">"bertin@1"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<div>
-<div id="ojs-cell-2-1" data-nodetype="declaration">
+<div id="ojs-cell-2" data-nodetype="declaration">
 
 </div>
 </div>
 </div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12" data-startfrom="217" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 216;"><span id="cb12-217"><a href="#cb12-217" aria-hidden="true" tabindex="-1"></a>L <span class="op">=</span> <span class="pp">require</span>(<span class="st">'leaflet@1.7.1'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
-<div>
-<div id="ojs-cell-2-2" data-nodetype="declaration">
+<div id="ojs-cell-3" data-nodetype="declaration">
 
 </div>
 </div>
 </div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13" data-startfrom="220" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 219;"><span id="cb13-220"><a href="#cb13-220" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">` &lt;link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"</span></span>
+<span id="cb13-221"><a href="#cb13-221" aria-hidden="true" tabindex="-1"></a><span class="vs">   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="</span></span>
+<span id="cb13-222"><a href="#cb13-222" aria-hidden="true" tabindex="-1"></a><span class="vs">   crossorigin=""/&gt;`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
-<div>
-<div id="ojs-cell-2-3" data-nodetype="expression">
+<div id="ojs-cell-4" data-nodetype="expression">
 
-</div>
 </div>
 </div>
 </div>
@@ -550,110 +556,110 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12" data-startfrom="224" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 223;"><span id="cb12-224"><a href="#cb12-224" aria-hidden="true" tabindex="-1"></a>urlWFS <span class="op">=</span> <span class="st">"https://geoservicos.ibge.gov.br/geoserver/ows"</span><span class="op">;</span></span>
-<span id="cb12-225"><a href="#cb12-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-226"><a href="#cb12-226" aria-hidden="true" tabindex="-1"></a>listaUF <span class="op">=</span> <span class="cf">await</span> <span class="fu">wfsRequest</span>(urlWFS<span class="op">,</span> <span class="st">"GetFeature"</span><span class="op">,</span> {</span>
-<span id="cb12-227"><a href="#cb12-227" aria-hidden="true" tabindex="-1"></a>  <span class="dt">service</span><span class="op">:</span> <span class="st">"WFS"</span><span class="op">,</span></span>
-<span id="cb12-228"><a href="#cb12-228" aria-hidden="true" tabindex="-1"></a>  <span class="dt">version</span><span class="op">:</span> <span class="st">"2.0.0"</span><span class="op">,</span></span>
-<span id="cb12-229"><a href="#cb12-229" aria-hidden="true" tabindex="-1"></a>  <span class="dt">typeNames</span><span class="op">:</span> <span class="st">"CGMAT:pbqg22_02_Estado_NomUF"</span><span class="op">,</span></span>
-<span id="cb12-230"><a href="#cb12-230" aria-hidden="true" tabindex="-1"></a>  <span class="dt">PropertyName</span><span class="op">:</span> <span class="st">"cd_uf,nm_uf"</span><span class="op">,</span></span>
-<span id="cb12-231"><a href="#cb12-231" aria-hidden="true" tabindex="-1"></a>  <span class="dt">outputFormat</span><span class="op">:</span> <span class="st">"application/json"</span></span>
-<span id="cb12-232"><a href="#cb12-232" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
-<span id="cb12-233"><a href="#cb12-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-234"><a href="#cb12-234" aria-hidden="true" tabindex="-1"></a>geo_uf <span class="op">=</span> <span class="cf">await</span> <span class="fu">wfsRequest</span>(urlWFS<span class="op">,</span> <span class="st">"GetFeature"</span><span class="op">,</span> {</span>
-<span id="cb12-235"><a href="#cb12-235" aria-hidden="true" tabindex="-1"></a>  <span class="dt">service</span><span class="op">:</span> <span class="st">"WFS"</span><span class="op">,</span></span>
-<span id="cb12-236"><a href="#cb12-236" aria-hidden="true" tabindex="-1"></a>  <span class="dt">version</span><span class="op">:</span> <span class="st">"2.0.0"</span><span class="op">,</span></span>
-<span id="cb12-237"><a href="#cb12-237" aria-hidden="true" tabindex="-1"></a>  <span class="dt">typeNames</span><span class="op">:</span> <span class="st">"CGMAT:pbqg22_02_Estado_NomUF"</span><span class="op">,</span></span>
-<span id="cb12-238"><a href="#cb12-238" aria-hidden="true" tabindex="-1"></a>  <span class="dt">cql_filter</span><span class="op">:</span> <span class="vs">`nm_uf='</span><span class="sc">${</span>selNomUF<span class="sc">}</span><span class="vs">'`</span><span class="op">,</span></span>
-<span id="cb12-239"><a href="#cb12-239" aria-hidden="true" tabindex="-1"></a>  <span class="dt">outputFormat</span><span class="op">:</span> <span class="st">"application/json"</span></span>
-<span id="cb12-240"><a href="#cb12-240" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
-<span id="cb12-241"><a href="#cb12-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-242"><a href="#cb12-242" aria-hidden="true" tabindex="-1"></a>MunicUF <span class="op">=</span> <span class="cf">await</span> <span class="fu">wfsRequest</span>(urlWFS<span class="op">,</span> <span class="st">"GetFeature"</span><span class="op">,</span> {</span>
-<span id="cb12-243"><a href="#cb12-243" aria-hidden="true" tabindex="-1"></a>  <span class="dt">service</span><span class="op">:</span> <span class="st">"WFS"</span><span class="op">,</span></span>
-<span id="cb12-244"><a href="#cb12-244" aria-hidden="true" tabindex="-1"></a>  <span class="dt">version</span><span class="op">:</span> <span class="st">"2.0.0"</span><span class="op">,</span></span>
-<span id="cb12-245"><a href="#cb12-245" aria-hidden="true" tabindex="-1"></a>  <span class="dt">typeNames</span><span class="op">:</span> <span class="st">"CGEO:PARBR2018_Municipios_mapeados"</span><span class="op">,</span></span>
-<span id="cb12-246"><a href="#cb12-246" aria-hidden="true" tabindex="-1"></a>  <span class="dt">cql_filter</span><span class="op">:</span> <span class="vs">`uf='</span><span class="sc">${</span>selUF<span class="sc">}</span><span class="vs">'`</span><span class="op">,</span></span>
-<span id="cb12-247"><a href="#cb12-247" aria-hidden="true" tabindex="-1"></a>  <span class="dt">outputFormat</span><span class="op">:</span> <span class="st">"application/json"</span></span>
-<span id="cb12-248"><a href="#cb12-248" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
-<span id="cb12-249"><a href="#cb12-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-250"><a href="#cb12-250" aria-hidden="true" tabindex="-1"></a>bater <span class="op">=</span> <span class="cf">await</span> <span class="fu">wfsRequest</span>(urlWFS<span class="op">,</span> <span class="st">"GetFeature"</span><span class="op">,</span> {</span>
-<span id="cb12-251"><a href="#cb12-251" aria-hidden="true" tabindex="-1"></a>  <span class="dt">service</span><span class="op">:</span> <span class="st">"WFS"</span><span class="op">,</span></span>
-<span id="cb12-252"><a href="#cb12-252" aria-hidden="true" tabindex="-1"></a>  <span class="dt">version</span><span class="op">:</span> <span class="st">"2.0.0"</span><span class="op">,</span></span>
-<span id="cb12-253"><a href="#cb12-253" aria-hidden="true" tabindex="-1"></a>  <span class="dt">typeNames</span><span class="op">:</span> <span class="st">"CGEO:PARBR2018_BATER_MD"</span><span class="op">,</span></span>
-<span id="cb12-254"><a href="#cb12-254" aria-hidden="true" tabindex="-1"></a>  <span class="dt">cql_filter</span><span class="op">:</span> <span class="vs">`geo_mun='</span><span class="sc">${</span>selCdMunic<span class="sc">}</span><span class="vs">'`</span><span class="op">,</span></span>
-<span id="cb12-255"><a href="#cb12-255" aria-hidden="true" tabindex="-1"></a>  <span class="dt">outputFormat</span><span class="op">:</span> <span class="st">"application/json"</span></span>
-<span id="cb12-256"><a href="#cb12-256" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
-<span id="cb12-257"><a href="#cb12-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-258"><a href="#cb12-258" aria-hidden="true" tabindex="-1"></a>selUF <span class="op">=</span> <span class="fu">stripAccents</span>(selNomUF)<span class="op">;</span></span>
-<span id="cb12-259"><a href="#cb12-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-260"><a href="#cb12-260" aria-hidden="true" tabindex="-1"></a>selCdMunic <span class="op">=</span> MunicUF<span class="op">.</span><span class="at">data</span><span class="op">.</span><span class="at">features</span><span class="op">.</span><span class="fu">filter</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">nommunic</span> <span class="op">===</span> selNomMunic)[<span class="dv">0</span>]<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">codmunic</span><span class="op">;</span></span>
-<span id="cb12-261"><a href="#cb12-261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-262"><a href="#cb12-262" aria-hidden="true" tabindex="-1"></a>selMunicArray <span class="op">=</span> MunicUF<span class="op">.</span><span class="at">data</span><span class="op">.</span><span class="at">features</span><span class="op">.</span><span class="fu">filter</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">nommunic</span> <span class="op">==</span> selNomMunic)<span class="op">;</span></span>
-<span id="cb12-263"><a href="#cb12-263" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-264"><a href="#cb12-264" aria-hidden="true" tabindex="-1"></a>selMunic <span class="op">=</span> ({</span>
-<span id="cb12-265"><a href="#cb12-265" aria-hidden="true" tabindex="-1"></a>  <span class="st">"type"</span><span class="op">:</span><span class="st">"FeatureCollection"</span><span class="op">,</span></span>
-<span id="cb12-266"><a href="#cb12-266" aria-hidden="true" tabindex="-1"></a>  <span class="st">"features"</span><span class="op">:</span>selMunicArray  </span>
-<span id="cb12-267"><a href="#cb12-267" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14" data-startfrom="230" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 229;"><span id="cb14-230"><a href="#cb14-230" aria-hidden="true" tabindex="-1"></a>urlWFS <span class="op">=</span> <span class="st">"https://geoservicos.ibge.gov.br/geoserver/ows"</span><span class="op">;</span></span>
+<span id="cb14-231"><a href="#cb14-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-232"><a href="#cb14-232" aria-hidden="true" tabindex="-1"></a>listaUF <span class="op">=</span> <span class="cf">await</span> <span class="fu">wfsRequest</span>(urlWFS<span class="op">,</span> <span class="st">"GetFeature"</span><span class="op">,</span> {</span>
+<span id="cb14-233"><a href="#cb14-233" aria-hidden="true" tabindex="-1"></a>  <span class="dt">service</span><span class="op">:</span> <span class="st">"WFS"</span><span class="op">,</span></span>
+<span id="cb14-234"><a href="#cb14-234" aria-hidden="true" tabindex="-1"></a>  <span class="dt">version</span><span class="op">:</span> <span class="st">"2.0.0"</span><span class="op">,</span></span>
+<span id="cb14-235"><a href="#cb14-235" aria-hidden="true" tabindex="-1"></a>  <span class="dt">typeNames</span><span class="op">:</span> <span class="st">"CGMAT:pbqg22_02_Estado_NomUF"</span><span class="op">,</span></span>
+<span id="cb14-236"><a href="#cb14-236" aria-hidden="true" tabindex="-1"></a>  <span class="dt">PropertyName</span><span class="op">:</span> <span class="st">"cd_uf,nm_uf"</span><span class="op">,</span></span>
+<span id="cb14-237"><a href="#cb14-237" aria-hidden="true" tabindex="-1"></a>  <span class="dt">outputFormat</span><span class="op">:</span> <span class="st">"application/json"</span></span>
+<span id="cb14-238"><a href="#cb14-238" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb14-239"><a href="#cb14-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-240"><a href="#cb14-240" aria-hidden="true" tabindex="-1"></a>geo_uf <span class="op">=</span> <span class="cf">await</span> <span class="fu">wfsRequest</span>(urlWFS<span class="op">,</span> <span class="st">"GetFeature"</span><span class="op">,</span> {</span>
+<span id="cb14-241"><a href="#cb14-241" aria-hidden="true" tabindex="-1"></a>  <span class="dt">service</span><span class="op">:</span> <span class="st">"WFS"</span><span class="op">,</span></span>
+<span id="cb14-242"><a href="#cb14-242" aria-hidden="true" tabindex="-1"></a>  <span class="dt">version</span><span class="op">:</span> <span class="st">"2.0.0"</span><span class="op">,</span></span>
+<span id="cb14-243"><a href="#cb14-243" aria-hidden="true" tabindex="-1"></a>  <span class="dt">typeNames</span><span class="op">:</span> <span class="st">"CGMAT:pbqg22_02_Estado_NomUF"</span><span class="op">,</span></span>
+<span id="cb14-244"><a href="#cb14-244" aria-hidden="true" tabindex="-1"></a>  <span class="dt">cql_filter</span><span class="op">:</span> <span class="vs">`nm_uf='</span><span class="sc">${</span>selNomUF<span class="sc">}</span><span class="vs">'`</span><span class="op">,</span></span>
+<span id="cb14-245"><a href="#cb14-245" aria-hidden="true" tabindex="-1"></a>  <span class="dt">outputFormat</span><span class="op">:</span> <span class="st">"application/json"</span></span>
+<span id="cb14-246"><a href="#cb14-246" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb14-247"><a href="#cb14-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-248"><a href="#cb14-248" aria-hidden="true" tabindex="-1"></a>MunicUF <span class="op">=</span> <span class="cf">await</span> <span class="fu">wfsRequest</span>(urlWFS<span class="op">,</span> <span class="st">"GetFeature"</span><span class="op">,</span> {</span>
+<span id="cb14-249"><a href="#cb14-249" aria-hidden="true" tabindex="-1"></a>  <span class="dt">service</span><span class="op">:</span> <span class="st">"WFS"</span><span class="op">,</span></span>
+<span id="cb14-250"><a href="#cb14-250" aria-hidden="true" tabindex="-1"></a>  <span class="dt">version</span><span class="op">:</span> <span class="st">"2.0.0"</span><span class="op">,</span></span>
+<span id="cb14-251"><a href="#cb14-251" aria-hidden="true" tabindex="-1"></a>  <span class="dt">typeNames</span><span class="op">:</span> <span class="st">"CGEO:PARBR2018_Municipios_mapeados"</span><span class="op">,</span></span>
+<span id="cb14-252"><a href="#cb14-252" aria-hidden="true" tabindex="-1"></a>  <span class="dt">cql_filter</span><span class="op">:</span> <span class="vs">`uf='</span><span class="sc">${</span>selUF<span class="sc">}</span><span class="vs">'`</span><span class="op">,</span></span>
+<span id="cb14-253"><a href="#cb14-253" aria-hidden="true" tabindex="-1"></a>  <span class="dt">outputFormat</span><span class="op">:</span> <span class="st">"application/json"</span></span>
+<span id="cb14-254"><a href="#cb14-254" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb14-255"><a href="#cb14-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-256"><a href="#cb14-256" aria-hidden="true" tabindex="-1"></a>bater <span class="op">=</span> <span class="cf">await</span> <span class="fu">wfsRequest</span>(urlWFS<span class="op">,</span> <span class="st">"GetFeature"</span><span class="op">,</span> {</span>
+<span id="cb14-257"><a href="#cb14-257" aria-hidden="true" tabindex="-1"></a>  <span class="dt">service</span><span class="op">:</span> <span class="st">"WFS"</span><span class="op">,</span></span>
+<span id="cb14-258"><a href="#cb14-258" aria-hidden="true" tabindex="-1"></a>  <span class="dt">version</span><span class="op">:</span> <span class="st">"2.0.0"</span><span class="op">,</span></span>
+<span id="cb14-259"><a href="#cb14-259" aria-hidden="true" tabindex="-1"></a>  <span class="dt">typeNames</span><span class="op">:</span> <span class="st">"CGEO:PARBR2018_BATER_MD"</span><span class="op">,</span></span>
+<span id="cb14-260"><a href="#cb14-260" aria-hidden="true" tabindex="-1"></a>  <span class="dt">cql_filter</span><span class="op">:</span> <span class="vs">`geo_mun='</span><span class="sc">${</span>selCdMunic<span class="sc">}</span><span class="vs">'`</span><span class="op">,</span></span>
+<span id="cb14-261"><a href="#cb14-261" aria-hidden="true" tabindex="-1"></a>  <span class="dt">outputFormat</span><span class="op">:</span> <span class="st">"application/json"</span></span>
+<span id="cb14-262"><a href="#cb14-262" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb14-263"><a href="#cb14-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-264"><a href="#cb14-264" aria-hidden="true" tabindex="-1"></a>selUF <span class="op">=</span> <span class="fu">stripAccents</span>(selNomUF)<span class="op">;</span></span>
+<span id="cb14-265"><a href="#cb14-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-266"><a href="#cb14-266" aria-hidden="true" tabindex="-1"></a>selCdMunic <span class="op">=</span> MunicUF<span class="op">.</span><span class="at">data</span><span class="op">.</span><span class="at">features</span><span class="op">.</span><span class="fu">filter</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">nommunic</span> <span class="op">===</span> selNomMunic)[<span class="dv">0</span>]<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">codmunic</span><span class="op">;</span></span>
+<span id="cb14-267"><a href="#cb14-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-268"><a href="#cb14-268" aria-hidden="true" tabindex="-1"></a>selMunicArray <span class="op">=</span> MunicUF<span class="op">.</span><span class="at">data</span><span class="op">.</span><span class="at">features</span><span class="op">.</span><span class="fu">filter</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">nommunic</span> <span class="op">==</span> selNomMunic)<span class="op">;</span></span>
+<span id="cb14-269"><a href="#cb14-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-270"><a href="#cb14-270" aria-hidden="true" tabindex="-1"></a>selMunic <span class="op">=</span> ({</span>
+<span id="cb14-271"><a href="#cb14-271" aria-hidden="true" tabindex="-1"></a>  <span class="st">"type"</span><span class="op">:</span><span class="st">"FeatureCollection"</span><span class="op">,</span></span>
+<span id="cb14-272"><a href="#cb14-272" aria-hidden="true" tabindex="-1"></a>  <span class="st">"features"</span><span class="op">:</span>selMunicArray  </span>
+<span id="cb14-273"><a href="#cb14-273" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
-<div id="ojs-cell-3-1" data-nodetype="declaration">
+<div id="ojs-cell-5-1" data-nodetype="declaration">
 
 </div>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
-<div id="ojs-cell-3-2" data-nodetype="declaration">
+<div id="ojs-cell-5-2" data-nodetype="declaration">
 
 </div>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
-<div id="ojs-cell-3-3" data-nodetype="declaration">
+<div id="ojs-cell-5-3" data-nodetype="declaration">
 
 </div>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
-<div id="ojs-cell-3-4" data-nodetype="declaration">
+<div id="ojs-cell-5-4" data-nodetype="declaration">
 
 </div>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
-<div id="ojs-cell-3-5" data-nodetype="declaration">
+<div id="ojs-cell-5-5" data-nodetype="declaration">
 
 </div>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
-<div id="ojs-cell-3-6" data-nodetype="declaration">
+<div id="ojs-cell-5-6" data-nodetype="declaration">
 
 </div>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
-<div id="ojs-cell-3-7" data-nodetype="declaration">
+<div id="ojs-cell-5-7" data-nodetype="declaration">
 
 </div>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
-<div id="ojs-cell-3-8" data-nodetype="declaration">
+<div id="ojs-cell-5-8" data-nodetype="declaration">
 
 </div>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
-<div id="ojs-cell-3-9" data-nodetype="declaration">
+<div id="ojs-cell-5-9" data-nodetype="declaration">
 
 </div>
 </div>
@@ -662,107 +668,108 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell page-columns page-full">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13" data-startfrom="275" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 274;"><span id="cb13-275"><a href="#cb13-275" aria-hidden="true" tabindex="-1"></a>viewof selNomUF <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(</span>
-<span id="cb13-276"><a href="#cb13-276" aria-hidden="true" tabindex="-1"></a>    listaUF<span class="op">.</span><span class="at">data</span><span class="op">.</span><span class="at">features</span><span class="op">.</span><span class="fu">map</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">nm_uf</span>)<span class="op">,</span> </span>
-<span id="cb13-277"><a href="#cb13-277" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb13-278"><a href="#cb13-278" aria-hidden="true" tabindex="-1"></a>        <span class="dt">label</span><span class="op">:</span> <span class="st">"Unidade da Federação"</span></span>
-<span id="cb13-279"><a href="#cb13-279" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-280"><a href="#cb13-280" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15" data-startfrom="281" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 280;"><span id="cb15-281"><a href="#cb15-281" aria-hidden="true" tabindex="-1"></a>viewof selNomUF <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(</span>
+<span id="cb15-282"><a href="#cb15-282" aria-hidden="true" tabindex="-1"></a>    listaUF<span class="op">.</span><span class="at">data</span><span class="op">.</span><span class="at">features</span><span class="op">.</span><span class="fu">map</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">nm_uf</span>)<span class="op">,</span> </span>
+<span id="cb15-283"><a href="#cb15-283" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb15-284"><a href="#cb15-284" aria-hidden="true" tabindex="-1"></a>        <span class="dt">label</span><span class="op">:</span> <span class="st">"Unidade da Federação"</span></span>
+<span id="cb15-285"><a href="#cb15-285" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb15-286"><a href="#cb15-286" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 <div class="no-row-height column-margin column-container"><div class="cell-output cell-output-display">
-<div id="ojs-cell-4" data-nodetype="declaration">
+<div id="ojs-cell-6" data-nodetype="declaration">
 
 </div>
 </div></div></div>
 <div class="cell page-columns page-full">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14" data-startfrom="285" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 284;"><span id="cb14-285"><a href="#cb14-285" aria-hidden="true" tabindex="-1"></a>mapauf <span class="op">=</span> bertin<span class="op">.</span><span class="fu">draw</span>({</span>
-<span id="cb14-286"><a href="#cb14-286" aria-hidden="true" tabindex="-1"></a>  <span class="dt">params</span><span class="op">:</span> { <span class="dt">background</span><span class="op">:</span> <span class="st">"#bde1f0"</span><span class="op">,</span> <span class="dt">margin</span><span class="op">:</span> <span class="dv">10</span> }<span class="op">,</span></span>
-<span id="cb14-287"><a href="#cb14-287" aria-hidden="true" tabindex="-1"></a>  <span class="dt">layers</span><span class="op">:</span> [{</span>
-<span id="cb14-288"><a href="#cb14-288" aria-hidden="true" tabindex="-1"></a>      <span class="dt">type</span><span class="op">:</span> <span class="st">"layer"</span><span class="op">,</span></span>
-<span id="cb14-289"><a href="#cb14-289" aria-hidden="true" tabindex="-1"></a>      <span class="dt">geojson</span><span class="op">:</span> selMunic<span class="op">,</span></span>
-<span id="cb14-290"><a href="#cb14-290" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> <span class="st">"#000000"</span><span class="op">,</span>      </span>
-<span id="cb14-291"><a href="#cb14-291" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.8</span><span class="op">,</span></span>
-<span id="cb14-292"><a href="#cb14-292" aria-hidden="true" tabindex="-1"></a>      <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#000000"</span><span class="op">,</span></span>
-<span id="cb14-293"><a href="#cb14-293" aria-hidden="true" tabindex="-1"></a>      <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span></span>
-<span id="cb14-294"><a href="#cb14-294" aria-hidden="true" tabindex="-1"></a>      <span class="dt">symbol</span><span class="op">:</span> <span class="st">"square"</span><span class="op">,</span></span>
-<span id="cb14-295"><a href="#cb14-295" aria-hidden="true" tabindex="-1"></a>      <span class="dt">symbol_size</span><span class="op">:</span> <span class="dv">50</span></span>
-<span id="cb14-296"><a href="#cb14-296" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
-<span id="cb14-297"><a href="#cb14-297" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb14-298"><a href="#cb14-298" aria-hidden="true" tabindex="-1"></a>      <span class="dt">type</span><span class="op">:</span> <span class="st">"layer"</span><span class="op">,</span></span>
-<span id="cb14-299"><a href="#cb14-299" aria-hidden="true" tabindex="-1"></a>      <span class="dt">geojson</span><span class="op">:</span> MunicUF<span class="op">.</span><span class="at">data</span><span class="op">,</span></span>
-<span id="cb14-300"><a href="#cb14-300" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> <span class="st">"#ff0000"</span><span class="op">,</span></span>
-<span id="cb14-301"><a href="#cb14-301" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.6</span><span class="op">,</span></span>
-<span id="cb14-302"><a href="#cb14-302" aria-hidden="true" tabindex="-1"></a>      <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#ff0000"</span><span class="op">,</span></span>
-<span id="cb14-303"><a href="#cb14-303" aria-hidden="true" tabindex="-1"></a>      <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
-<span id="cb14-304"><a href="#cb14-304" aria-hidden="true" tabindex="-1"></a>      <span class="dt">symbol</span><span class="op">:</span> <span class="st">"square"</span><span class="op">,</span></span>
-<span id="cb14-305"><a href="#cb14-305" aria-hidden="true" tabindex="-1"></a>      <span class="dt">symbol_size</span><span class="op">:</span> <span class="dv">50</span></span>
-<span id="cb14-306"><a href="#cb14-306" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
-<span id="cb14-307"><a href="#cb14-307" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb14-308"><a href="#cb14-308" aria-hidden="true" tabindex="-1"></a>      <span class="dt">type</span><span class="op">:</span> <span class="st">"layer"</span><span class="op">,</span></span>
-<span id="cb14-309"><a href="#cb14-309" aria-hidden="true" tabindex="-1"></a>      <span class="dt">geojson</span><span class="op">:</span> geo_uf<span class="op">.</span><span class="at">data</span><span class="op">,</span></span>
-<span id="cb14-310"><a href="#cb14-310" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> <span class="st">"#999999"</span><span class="op">,</span>      </span>
-<span id="cb14-311"><a href="#cb14-311" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.25</span><span class="op">,</span></span>
-<span id="cb14-312"><a href="#cb14-312" aria-hidden="true" tabindex="-1"></a>      <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#777777"</span><span class="op">,</span></span>
-<span id="cb14-313"><a href="#cb14-313" aria-hidden="true" tabindex="-1"></a>      <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span></span>
-<span id="cb14-314"><a href="#cb14-314" aria-hidden="true" tabindex="-1"></a>      <span class="dt">symbol</span><span class="op">:</span> <span class="st">"square"</span><span class="op">,</span></span>
-<span id="cb14-315"><a href="#cb14-315" aria-hidden="true" tabindex="-1"></a>      <span class="dt">symbol_size</span><span class="op">:</span> <span class="dv">50</span></span>
-<span id="cb14-316"><a href="#cb14-316" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
-<span id="cb14-317"><a href="#cb14-317" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb14-318"><a href="#cb14-318" aria-hidden="true" tabindex="-1"></a>      <span class="dt">type</span><span class="op">:</span> <span class="st">"tiles"</span><span class="op">,</span></span>
-<span id="cb14-319"><a href="#cb14-319" aria-hidden="true" tabindex="-1"></a>      <span class="dt">opacity</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
-<span id="cb14-320"><a href="#cb14-320" aria-hidden="true" tabindex="-1"></a>      <span class="dt">style</span><span class="op">:</span> <span class="st">"openstreetmap"</span><span class="op">,</span></span>
-<span id="cb14-321"><a href="#cb14-321" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb14-322"><a href="#cb14-322" aria-hidden="true" tabindex="-1"></a>  ]</span>
-<span id="cb14-323"><a href="#cb14-323" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16" data-startfrom="294" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 293;"><span id="cb16-294"><a href="#cb16-294" aria-hidden="true" tabindex="-1"></a>mapauf <span class="op">=</span> bertin<span class="op">.</span><span class="fu">draw</span>({</span>
+<span id="cb16-295"><a href="#cb16-295" aria-hidden="true" tabindex="-1"></a>  <span class="dt">params</span><span class="op">:</span> { <span class="dt">background</span><span class="op">:</span> <span class="st">"#bde1f0"</span><span class="op">,</span> <span class="dt">margin</span><span class="op">:</span> <span class="dv">10</span> }<span class="op">,</span></span>
+<span id="cb16-296"><a href="#cb16-296" aria-hidden="true" tabindex="-1"></a>  <span class="dt">layers</span><span class="op">:</span> [{</span>
+<span id="cb16-297"><a href="#cb16-297" aria-hidden="true" tabindex="-1"></a>      <span class="dt">type</span><span class="op">:</span> <span class="st">"layer"</span><span class="op">,</span></span>
+<span id="cb16-298"><a href="#cb16-298" aria-hidden="true" tabindex="-1"></a>      <span class="dt">geojson</span><span class="op">:</span> selMunic<span class="op">,</span></span>
+<span id="cb16-299"><a href="#cb16-299" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> <span class="st">"#ff0000"</span><span class="op">,</span>      </span>
+<span id="cb16-300"><a href="#cb16-300" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fillOpacity</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb16-301"><a href="#cb16-301" aria-hidden="true" tabindex="-1"></a>      <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#000000"</span><span class="op">,</span></span>
+<span id="cb16-302"><a href="#cb16-302" aria-hidden="true" tabindex="-1"></a>      <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span></span>
+<span id="cb16-303"><a href="#cb16-303" aria-hidden="true" tabindex="-1"></a>      <span class="dt">symbol</span><span class="op">:</span> <span class="st">"square"</span><span class="op">,</span></span>
+<span id="cb16-304"><a href="#cb16-304" aria-hidden="true" tabindex="-1"></a>      <span class="dt">symbol_size</span><span class="op">:</span> <span class="dv">50</span></span>
+<span id="cb16-305"><a href="#cb16-305" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb16-306"><a href="#cb16-306" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb16-307"><a href="#cb16-307" aria-hidden="true" tabindex="-1"></a>      <span class="dt">type</span><span class="op">:</span> <span class="st">"layer"</span><span class="op">,</span></span>
+<span id="cb16-308"><a href="#cb16-308" aria-hidden="true" tabindex="-1"></a>      <span class="dt">geojson</span><span class="op">:</span> MunicUF<span class="op">.</span><span class="at">data</span><span class="op">,</span></span>
+<span id="cb16-309"><a href="#cb16-309" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> <span class="st">"#000000"</span><span class="op">,</span></span>
+<span id="cb16-310"><a href="#cb16-310" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.0</span><span class="op">,</span></span>
+<span id="cb16-311"><a href="#cb16-311" aria-hidden="true" tabindex="-1"></a>      <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#ff0000"</span><span class="op">,</span></span>
+<span id="cb16-312"><a href="#cb16-312" aria-hidden="true" tabindex="-1"></a>      <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span></span>
+<span id="cb16-313"><a href="#cb16-313" aria-hidden="true" tabindex="-1"></a>      <span class="dt">symbol</span><span class="op">:</span> <span class="st">"square"</span><span class="op">,</span></span>
+<span id="cb16-314"><a href="#cb16-314" aria-hidden="true" tabindex="-1"></a>      <span class="dt">symbol_size</span><span class="op">:</span> <span class="dv">50</span></span>
+<span id="cb16-315"><a href="#cb16-315" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb16-316"><a href="#cb16-316" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb16-317"><a href="#cb16-317" aria-hidden="true" tabindex="-1"></a>      <span class="dt">type</span><span class="op">:</span> <span class="st">"layer"</span><span class="op">,</span></span>
+<span id="cb16-318"><a href="#cb16-318" aria-hidden="true" tabindex="-1"></a>      <span class="dt">geojson</span><span class="op">:</span> geo_uf<span class="op">.</span><span class="at">data</span><span class="op">,</span></span>
+<span id="cb16-319"><a href="#cb16-319" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> <span class="st">"#999999"</span><span class="op">,</span>      </span>
+<span id="cb16-320"><a href="#cb16-320" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.25</span><span class="op">,</span></span>
+<span id="cb16-321"><a href="#cb16-321" aria-hidden="true" tabindex="-1"></a>      <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#777777"</span><span class="op">,</span></span>
+<span id="cb16-322"><a href="#cb16-322" aria-hidden="true" tabindex="-1"></a>      <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span></span>
+<span id="cb16-323"><a href="#cb16-323" aria-hidden="true" tabindex="-1"></a>      <span class="dt">symbol</span><span class="op">:</span> <span class="st">"square"</span><span class="op">,</span></span>
+<span id="cb16-324"><a href="#cb16-324" aria-hidden="true" tabindex="-1"></a>      <span class="dt">symbol_size</span><span class="op">:</span> <span class="dv">50</span></span>
+<span id="cb16-325"><a href="#cb16-325" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb16-326"><a href="#cb16-326" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb16-327"><a href="#cb16-327" aria-hidden="true" tabindex="-1"></a>      <span class="dt">type</span><span class="op">:</span> <span class="st">"tiles"</span><span class="op">,</span></span>
+<span id="cb16-328"><a href="#cb16-328" aria-hidden="true" tabindex="-1"></a>      <span class="dt">opacity</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb16-329"><a href="#cb16-329" aria-hidden="true" tabindex="-1"></a>      <span class="dt">style</span><span class="op">:</span> <span class="st">"openstreetmap"</span><span class="op">,</span></span>
+<span id="cb16-330"><a href="#cb16-330" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb16-331"><a href="#cb16-331" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb16-332"><a href="#cb16-332" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 <div class="no-row-height column-margin column-container"><div class="cell-output cell-output-display">
-<div id="ojs-cell-5" data-nodetype="declaration">
+<div id="ojs-cell-7" data-nodetype="declaration">
 
 </div>
 </div></div></div>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15" data-startfrom="328" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 327;"><span id="cb15-328"><a href="#cb15-328" aria-hidden="true" tabindex="-1"></a>viewof selNomMunic <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(</span>
-<span id="cb15-329"><a href="#cb15-329" aria-hidden="true" tabindex="-1"></a>    MunicUF<span class="op">.</span><span class="at">data</span><span class="op">.</span><span class="at">features</span><span class="op">.</span><span class="fu">map</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">nommunic</span>)<span class="op">,</span></span>
-<span id="cb15-330"><a href="#cb15-330" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb15-331"><a href="#cb15-331" aria-hidden="true" tabindex="-1"></a>        <span class="dt">label</span><span class="op">:</span> <span class="st">"Município"</span></span>
-<span id="cb15-332"><a href="#cb15-332" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb15-333"><a href="#cb15-333" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-334"><a href="#cb15-334" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-335"><a href="#cb15-335" aria-hidden="true" tabindex="-1"></a>mapaInterativo <span class="op">=</span> {</span>
-<span id="cb15-336"><a href="#cb15-336" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> container <span class="op">=</span> DOM<span class="op">.</span><span class="fu">element</span>(<span class="st">'div'</span><span class="op">,</span> { <span class="dt">style</span><span class="op">:</span> <span class="vs">`width:</span><span class="sc">${</span>width<span class="op">/</span><span class="fl">2.35</span><span class="sc">}</span><span class="vs">px;height:</span><span class="sc">${</span>width<span class="op">/</span><span class="fl">3.2</span><span class="sc">}</span><span class="vs">px`</span> })<span class="op">;</span></span>
-<span id="cb15-337"><a href="#cb15-337" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb15-338"><a href="#cb15-338" aria-hidden="true" tabindex="-1"></a>  <span class="kw">yield</span> container<span class="op">;</span></span>
-<span id="cb15-339"><a href="#cb15-339" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb15-340"><a href="#cb15-340" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Now we create a map object and add a layer to it.</span></span>
-<span id="cb15-341"><a href="#cb15-341" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> map <span class="op">=</span> L<span class="op">.</span><span class="fu">map</span>(container)<span class="op">;</span></span>
-<span id="cb15-342"><a href="#cb15-342" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> osmLayer <span class="op">=</span> L<span class="op">.</span><span class="fu">tileLayer</span>(<span class="st">'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png'</span><span class="op">,</span> {</span>
-<span id="cb15-343"><a href="#cb15-343" aria-hidden="true" tabindex="-1"></a>      <span class="dt">attribution</span><span class="op">:</span> <span class="st">'&amp;copy; &lt;a href="http://osm.org/copyright"&gt;OpenStreetMap&lt;/a&gt; contributors'</span></span>
-<span id="cb15-344"><a href="#cb15-344" aria-hidden="true" tabindex="-1"></a>  })<span class="op">.</span><span class="fu">addTo</span>(map)<span class="op">;</span></span>
-<span id="cb15-345"><a href="#cb15-345" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb15-346"><a href="#cb15-346" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> baterLayer <span class="op">=</span> L<span class="op">.</span><span class="fu">geoJson</span>(bater<span class="op">.</span><span class="at">data</span><span class="op">,</span> {</span>
-<span id="cb15-347"><a href="#cb15-347" aria-hidden="true" tabindex="-1"></a>    <span class="dt">weight</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span></span>
-<span id="cb15-348"><a href="#cb15-348" aria-hidden="true" tabindex="-1"></a>    <span class="dt">color</span><span class="op">:</span> <span class="st">'#432'</span></span>
-<span id="cb15-349"><a href="#cb15-349" aria-hidden="true" tabindex="-1"></a>  })<span class="op">.</span><span class="fu">addTo</span>(map)<span class="op">;</span></span>
-<span id="cb15-350"><a href="#cb15-350" aria-hidden="true" tabindex="-1"></a>  baterLayer<span class="op">.</span><span class="fu">bindPopup</span>(<span class="st">"Aqui aparecem os dados da bater"</span>)<span class="op">;</span></span>
-<span id="cb15-351"><a href="#cb15-351" aria-hidden="true" tabindex="-1"></a>  map<span class="op">.</span><span class="fu">fitBounds</span>(baterLayer<span class="op">.</span><span class="fu">getBounds</span>())<span class="op">;</span></span>
-<span id="cb15-352"><a href="#cb15-352" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17" data-startfrom="338" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 337;"><span id="cb17-338"><a href="#cb17-338" aria-hidden="true" tabindex="-1"></a>viewof selNomMunic <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(</span>
+<span id="cb17-339"><a href="#cb17-339" aria-hidden="true" tabindex="-1"></a>    MunicUF<span class="op">.</span><span class="at">data</span><span class="op">.</span><span class="at">features</span><span class="op">.</span><span class="fu">map</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">nommunic</span>)<span class="op">,</span></span>
+<span id="cb17-340"><a href="#cb17-340" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb17-341"><a href="#cb17-341" aria-hidden="true" tabindex="-1"></a>        <span class="dt">label</span><span class="op">:</span> <span class="st">"Município"</span></span>
+<span id="cb17-342"><a href="#cb17-342" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb17-343"><a href="#cb17-343" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<div>
-<div id="ojs-cell-6-1" data-nodetype="declaration">
+<div id="ojs-cell-8" data-nodetype="declaration">
 
 </div>
 </div>
 </div>
+<div class="column-screen-inset">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18" data-startfrom="348" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 347;"><span id="cb18-348"><a href="#cb18-348" aria-hidden="true" tabindex="-1"></a>mapaInterativo <span class="op">=</span> {</span>
+<span id="cb18-349"><a href="#cb18-349" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> container <span class="op">=</span> DOM<span class="op">.</span><span class="fu">element</span>(<span class="st">'div'</span><span class="op">,</span> { <span class="dt">style</span><span class="op">:</span> <span class="vs">`width:</span><span class="sc">${</span>width<span class="op">*</span><span class="fl">0.95</span><span class="sc">}</span><span class="vs">px;height:</span><span class="sc">${</span>width<span class="op">/</span><span class="fl">1.7</span><span class="sc">}</span><span class="vs">px`</span> })<span class="op">;</span></span>
+<span id="cb18-350"><a href="#cb18-350" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb18-351"><a href="#cb18-351" aria-hidden="true" tabindex="-1"></a>  <span class="kw">yield</span> container<span class="op">;</span></span>
+<span id="cb18-352"><a href="#cb18-352" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-353"><a href="#cb18-353" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> map <span class="op">=</span> L<span class="op">.</span><span class="fu">map</span>(container)<span class="op">;</span></span>
+<span id="cb18-354"><a href="#cb18-354" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> osmTileLayer <span class="op">=</span> L<span class="op">.</span><span class="fu">tileLayer</span>( <span class="st">'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png'</span><span class="op">,</span> {</span>
+<span id="cb18-355"><a href="#cb18-355" aria-hidden="true" tabindex="-1"></a>      <span class="dt">attribution</span><span class="op">:</span> <span class="st">'&amp;copy; &lt;a href="https://www.openstreetmap.org/copyright"&gt;OpenStreetMap&lt;/a&gt;'</span></span>
+<span id="cb18-356"><a href="#cb18-356" aria-hidden="true" tabindex="-1"></a>  })<span class="op">.</span><span class="fu">addTo</span>( map )<span class="op">;</span></span>
+<span id="cb18-357"><a href="#cb18-357" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-358"><a href="#cb18-358" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> baterLayer <span class="op">=</span> L<span class="op">.</span><span class="fu">geoJson</span>(bater<span class="op">.</span><span class="at">data</span><span class="op">,</span> {</span>
+<span id="cb18-359"><a href="#cb18-359" aria-hidden="true" tabindex="-1"></a>    <span class="dt">weight</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span></span>
+<span id="cb18-360"><a href="#cb18-360" aria-hidden="true" tabindex="-1"></a>    <span class="dt">color</span><span class="op">:</span> <span class="st">'#ff0000'</span></span>
+<span id="cb18-361"><a href="#cb18-361" aria-hidden="true" tabindex="-1"></a>  })<span class="op">.</span><span class="fu">addTo</span>(map)<span class="op">;</span></span>
+<span id="cb18-362"><a href="#cb18-362" aria-hidden="true" tabindex="-1"></a>  baterLayer<span class="op">.</span><span class="fu">bindPopup</span>(<span class="st">"Aqui aparecem os dados da bater"</span>)<span class="op">;</span></span>
+<span id="cb18-363"><a href="#cb18-363" aria-hidden="true" tabindex="-1"></a>  map<span class="op">.</span><span class="fu">fitBounds</span>(baterLayer<span class="op">.</span><span class="fu">getBounds</span>())<span class="op">;</span></span>
+<span id="cb18-364"><a href="#cb18-364" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
-<div>
-<div id="ojs-cell-6-2" data-nodetype="declaration">
+<div id="ojs-cell-9" data-nodetype="declaration">
 
 </div>
 </div>
@@ -776,51 +783,51 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16" data-startfrom="363" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 362;"><span id="cb16-363"><a href="#cb16-363" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">wfsRequest</span>(</span>
-<span id="cb16-364"><a href="#cb16-364" aria-hidden="true" tabindex="-1"></a>  url<span class="op">,</span></span>
-<span id="cb16-365"><a href="#cb16-365" aria-hidden="true" tabindex="-1"></a>  operation <span class="op">=</span> <span class="st">"GetCapabilities"</span><span class="op">,</span></span>
-<span id="cb16-366"><a href="#cb16-366" aria-hidden="true" tabindex="-1"></a>  extraParameters <span class="op">=</span> {}</span>
-<span id="cb16-367"><a href="#cb16-367" aria-hidden="true" tabindex="-1"></a>) {</span>
-<span id="cb16-368"><a href="#cb16-368" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> queryParameters <span class="op">=</span> <span class="kw">new</span> <span class="fu">URLSearchParams</span>({</span>
-<span id="cb16-369"><a href="#cb16-369" aria-hidden="true" tabindex="-1"></a>    <span class="dt">request</span><span class="op">:</span> operation<span class="op">,</span></span>
-<span id="cb16-370"><a href="#cb16-370" aria-hidden="true" tabindex="-1"></a>    <span class="dt">service</span><span class="op">:</span> <span class="st">"WFS"</span><span class="op">,</span></span>
-<span id="cb16-371"><a href="#cb16-371" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span>extraParameters</span>
-<span id="cb16-372"><a href="#cb16-372" aria-hidden="true" tabindex="-1"></a>  })<span class="op">.</span><span class="fu">toString</span>()<span class="op">;</span></span>
-<span id="cb16-373"><a href="#cb16-373" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-374"><a href="#cb16-374" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(queryParameters)<span class="op">;</span></span>
-<span id="cb16-375"><a href="#cb16-375" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-376"><a href="#cb16-376" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(<span class="vs">`</span><span class="sc">${</span>url<span class="sc">}</span><span class="vs">?</span><span class="sc">${</span>queryParameters<span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></span>
-<span id="cb16-377"><a href="#cb16-377" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> responseFormat <span class="op">=</span> response<span class="op">.</span><span class="at">headers</span><span class="op">.</span><span class="fu">get</span>(<span class="st">"Content-Type"</span>)<span class="op">;</span></span>
-<span id="cb16-378"><a href="#cb16-378" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-379"><a href="#cb16-379" aria-hidden="true" tabindex="-1"></a>  <span class="co">// If the WFS server returns Content-Type header containing "json" it will read the data as json, otherwise as text.</span></span>
-<span id="cb16-380"><a href="#cb16-380" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> data <span class="op">=</span> responseFormat<span class="op">.</span><span class="fu">includes</span>(<span class="st">"json"</span>)</span>
-<span id="cb16-381"><a href="#cb16-381" aria-hidden="true" tabindex="-1"></a>    <span class="op">?</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()</span>
-<span id="cb16-382"><a href="#cb16-382" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">text</span>()<span class="op">;</span></span>
-<span id="cb16-383"><a href="#cb16-383" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-384"><a href="#cb16-384" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
-<span id="cb16-385"><a href="#cb16-385" aria-hidden="true" tabindex="-1"></a>    <span class="dt">data</span><span class="op">:</span> data<span class="op">,</span></span>
-<span id="cb16-386"><a href="#cb16-386" aria-hidden="true" tabindex="-1"></a>    <span class="dt">status</span><span class="op">:</span> response<span class="op">.</span><span class="at">status</span></span>
-<span id="cb16-387"><a href="#cb16-387" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
-<span id="cb16-388"><a href="#cb16-388" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
-<span id="cb16-389"><a href="#cb16-389" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-390"><a href="#cb16-390" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">stripAccents</span>(str) {</span>
-<span id="cb16-391"><a href="#cb16-391" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> reAccents <span class="op">=</span> <span class="ss">/</span><span class="sc">[àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ]</span><span class="ss">/g</span><span class="op">;</span></span>
-<span id="cb16-392"><a href="#cb16-392" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> replacements <span class="op">=</span> <span class="st">'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY'</span><span class="op">;</span></span>
-<span id="cb16-393"><a href="#cb16-393" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> str<span class="op">.</span><span class="fu">replace</span>(reAccents<span class="op">,</span> <span class="kw">function</span> (match) {</span>
-<span id="cb16-394"><a href="#cb16-394" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> replacements[reAccents<span class="op">.</span><span class="at">source</span><span class="op">.</span><span class="fu">indexOf</span>(match)]<span class="op">;</span></span>
-<span id="cb16-395"><a href="#cb16-395" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
-<span id="cb16-396"><a href="#cb16-396" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19" data-startfrom="377" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 376;"><span id="cb19-377"><a href="#cb19-377" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">wfsRequest</span>(</span>
+<span id="cb19-378"><a href="#cb19-378" aria-hidden="true" tabindex="-1"></a>  url<span class="op">,</span></span>
+<span id="cb19-379"><a href="#cb19-379" aria-hidden="true" tabindex="-1"></a>  operation <span class="op">=</span> <span class="st">"GetCapabilities"</span><span class="op">,</span></span>
+<span id="cb19-380"><a href="#cb19-380" aria-hidden="true" tabindex="-1"></a>  extraParameters <span class="op">=</span> {}</span>
+<span id="cb19-381"><a href="#cb19-381" aria-hidden="true" tabindex="-1"></a>) {</span>
+<span id="cb19-382"><a href="#cb19-382" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> queryParameters <span class="op">=</span> <span class="kw">new</span> <span class="fu">URLSearchParams</span>({</span>
+<span id="cb19-383"><a href="#cb19-383" aria-hidden="true" tabindex="-1"></a>    <span class="dt">request</span><span class="op">:</span> operation<span class="op">,</span></span>
+<span id="cb19-384"><a href="#cb19-384" aria-hidden="true" tabindex="-1"></a>    <span class="dt">service</span><span class="op">:</span> <span class="st">"WFS"</span><span class="op">,</span></span>
+<span id="cb19-385"><a href="#cb19-385" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span>extraParameters</span>
+<span id="cb19-386"><a href="#cb19-386" aria-hidden="true" tabindex="-1"></a>  })<span class="op">.</span><span class="fu">toString</span>()<span class="op">;</span></span>
+<span id="cb19-387"><a href="#cb19-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-388"><a href="#cb19-388" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(queryParameters)<span class="op">;</span></span>
+<span id="cb19-389"><a href="#cb19-389" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-390"><a href="#cb19-390" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(<span class="vs">`</span><span class="sc">${</span>url<span class="sc">}</span><span class="vs">?</span><span class="sc">${</span>queryParameters<span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></span>
+<span id="cb19-391"><a href="#cb19-391" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> responseFormat <span class="op">=</span> response<span class="op">.</span><span class="at">headers</span><span class="op">.</span><span class="fu">get</span>(<span class="st">"Content-Type"</span>)<span class="op">;</span></span>
+<span id="cb19-392"><a href="#cb19-392" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-393"><a href="#cb19-393" aria-hidden="true" tabindex="-1"></a>  <span class="co">// If the WFS server returns Content-Type header containing "json" it will read the data as json, otherwise as text.</span></span>
+<span id="cb19-394"><a href="#cb19-394" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> data <span class="op">=</span> responseFormat<span class="op">.</span><span class="fu">includes</span>(<span class="st">"json"</span>)</span>
+<span id="cb19-395"><a href="#cb19-395" aria-hidden="true" tabindex="-1"></a>    <span class="op">?</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()</span>
+<span id="cb19-396"><a href="#cb19-396" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">text</span>()<span class="op">;</span></span>
+<span id="cb19-397"><a href="#cb19-397" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-398"><a href="#cb19-398" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb19-399"><a href="#cb19-399" aria-hidden="true" tabindex="-1"></a>    <span class="dt">data</span><span class="op">:</span> data<span class="op">,</span></span>
+<span id="cb19-400"><a href="#cb19-400" aria-hidden="true" tabindex="-1"></a>    <span class="dt">status</span><span class="op">:</span> response<span class="op">.</span><span class="at">status</span></span>
+<span id="cb19-401"><a href="#cb19-401" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb19-402"><a href="#cb19-402" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb19-403"><a href="#cb19-403" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-404"><a href="#cb19-404" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">stripAccents</span>(str) {</span>
+<span id="cb19-405"><a href="#cb19-405" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> reAccents <span class="op">=</span> <span class="ss">/</span><span class="sc">[àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ]</span><span class="ss">/g</span><span class="op">;</span></span>
+<span id="cb19-406"><a href="#cb19-406" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> replacements <span class="op">=</span> <span class="st">'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY'</span><span class="op">;</span></span>
+<span id="cb19-407"><a href="#cb19-407" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> str<span class="op">.</span><span class="fu">replace</span>(reAccents<span class="op">,</span> <span class="kw">function</span> (match) {</span>
+<span id="cb19-408"><a href="#cb19-408" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> replacements[reAccents<span class="op">.</span><span class="at">source</span><span class="op">.</span><span class="fu">indexOf</span>(match)]<span class="op">;</span></span>
+<span id="cb19-409"><a href="#cb19-409" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
+<span id="cb19-410"><a href="#cb19-410" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
-<div id="ojs-cell-7-1" data-nodetype="declaration">
+<div id="ojs-cell-10-1" data-nodetype="declaration">
 
 </div>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
-<div id="ojs-cell-7-2" data-nodetype="declaration">
+<div id="ojs-cell-10-2" data-nodetype="declaration">
 
 </div>
 </div>
@@ -833,7 +840,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </main> <!-- /main -->
 
 <script type="ojs-module-contents">
-{"contents":[{"methodName":"interpret","cellName":"ojs-cell-1","inline":false,"source":"viewof tabexemp = Inputs.table(transpose(totais));\n\n"},{"methodName":"interpret","cellName":"ojs-cell-2","inline":false,"source":"\nbertin = require(\"bertin@1\");\nL = require('leaflet@1.2.0');\nhtml`<link href='${resolve('leaflet@1.2.0/dist/leaflet.css')}' rel='stylesheet' />`\n"},{"methodName":"interpret","cellName":"ojs-cell-3","inline":false,"source":"\nurlWFS = \"https://geoservicos.ibge.gov.br/geoserver/ows\";\n\nlistaUF = await wfsRequest(urlWFS, \"GetFeature\", {\n  service: \"WFS\",\n  version: \"2.0.0\",\n  typeNames: \"CGMAT:pbqg22_02_Estado_NomUF\",\n  PropertyName: \"cd_uf,nm_uf\",\n  outputFormat: \"application/json\"\n});\n\ngeo_uf = await wfsRequest(urlWFS, \"GetFeature\", {\n  service: \"WFS\",\n  version: \"2.0.0\",\n  typeNames: \"CGMAT:pbqg22_02_Estado_NomUF\",\n  cql_filter: `nm_uf='${selNomUF}'`,\n  outputFormat: \"application/json\"\n});\n\nMunicUF = await wfsRequest(urlWFS, \"GetFeature\", {\n  service: \"WFS\",\n  version: \"2.0.0\",\n  typeNames: \"CGEO:PARBR2018_Municipios_mapeados\",\n  cql_filter: `uf='${selUF}'`,\n  outputFormat: \"application/json\"\n});\n\nbater = await wfsRequest(urlWFS, \"GetFeature\", {\n  service: \"WFS\",\n  version: \"2.0.0\",\n  typeNames: \"CGEO:PARBR2018_BATER_MD\",\n  cql_filter: `geo_mun='${selCdMunic}'`,\n  outputFormat: \"application/json\"\n});\n\nselUF = stripAccents(selNomUF);\n\nselCdMunic = MunicUF.data.features.filter((d) => d.properties.nommunic === selNomMunic)[0].properties.codmunic;\n\nselMunicArray = MunicUF.data.features.filter((d) => d.properties.nommunic == selNomMunic);\n\nselMunic = ({\n  \"type\":\"FeatureCollection\",\n  \"features\":selMunicArray  \n});\n\n"},{"methodName":"interpret","cellName":"ojs-cell-4","inline":false,"source":"\nviewof selNomUF = Inputs.select(\n    listaUF.data.features.map((d) => d.properties.nm_uf), \n    {\n        label: \"Unidade da Federação\"\n    }\n);\n"},{"methodName":"interpret","cellName":"ojs-cell-5","inline":false,"source":"mapauf = bertin.draw({\n  params: { background: \"#bde1f0\", margin: 10 },\n  layers: [{\n      type: \"layer\",\n      geojson: selMunic,\n      fill: \"#000000\",      \n      fillOpacity: 0.8,\n      stroke: \"#000000\",\n      strokeWidth: 2,\n      symbol: \"square\",\n      symbol_size: 50\n    },\n    {\n      type: \"layer\",\n      geojson: MunicUF.data,\n      fill: \"#ff0000\",\n      fillOpacity: 0.6,\n      stroke: \"#ff0000\",\n      strokeWidth: 1,\n      symbol: \"square\",\n      symbol_size: 50\n    },\n    {\n      type: \"layer\",\n      geojson: geo_uf.data,\n      fill: \"#999999\",      \n      fillOpacity: 0.25,\n      stroke: \"#777777\",\n      strokeWidth: 2,\n      symbol: \"square\",\n      symbol_size: 50\n    },\n    {\n      type: \"tiles\",\n      opacity: 1,\n      style: \"openstreetmap\",\n    }\n  ]\n});\n"},{"methodName":"interpret","cellName":"ojs-cell-6","inline":false,"source":"viewof selNomMunic = Inputs.select(\n    MunicUF.data.features.map((d) => d.properties.nommunic),\n    {\n        label: \"Município\"\n    }\n)\n\nmapaInterativo = {\n  let container = DOM.element('div', { style: `width:${width/2.35}px;height:${width/3.2}px` });\n \n  yield container;\n  \n  // Now we create a map object and add a layer to it.\n  let map = L.map(container);\n  let osmLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png', {\n      attribution: '&copy; <a href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors'\n  }).addTo(map);\n  \n  let baterLayer = L.geoJson(bater.data, {\n    weight: 5,\n    color: '#432'\n  }).addTo(map);\n  baterLayer.bindPopup(\"Aqui aparecem os dados da bater\");\n  map.fitBounds(baterLayer.getBounds());\n}\n\n"},{"methodName":"interpret","cellName":"ojs-cell-7","inline":false,"source":"\nasync function wfsRequest(\n  url,\n  operation = \"GetCapabilities\",\n  extraParameters = {}\n) {\n  const queryParameters = new URLSearchParams({\n    request: operation,\n    service: \"WFS\",\n    ...extraParameters\n  }).toString();\n\n  console.log(queryParameters);\n\n  const response = await fetch(`${url}?${queryParameters}`);\n  const responseFormat = response.headers.get(\"Content-Type\");\n\n  // If the WFS server returns Content-Type header containing \"json\" it will read the data as json, otherwise as text.\n  const data = responseFormat.includes(\"json\")\n    ? await response.json()\n    : await response.text();\n\n  return {\n    data: data,\n    status: response.status\n  };\n};\n\nfunction stripAccents(str) {\n    var reAccents = /[àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ]/g;\n    var replacements = 'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY';\n    return str.replace(reAccents, function (match) {\n        return replacements[reAccents.source.indexOf(match)];\n    });\n};\n\n"},{"methodName":"interpretQuiet","source":"shinyInput('tabexemp')"},{"methodName":"interpretQuiet","source":"shinyInput('selNomUF')"},{"methodName":"interpretQuiet","source":"shinyInput('selNomMunic')"}]}
+{"contents":[{"methodName":"interpret","cellName":"ojs-cell-1","inline":false,"source":"viewof tabexemp = Inputs.table(transpose(totais));\n\n"},{"methodName":"interpret","cellName":"ojs-cell-2","inline":false,"source":"\nbertin = require(\"bertin@1\");\n"},{"methodName":"interpret","cellName":"ojs-cell-3","inline":false,"source":"L = require('leaflet@1.7.1');\n"},{"methodName":"interpret","cellName":"ojs-cell-4","inline":false,"source":"html` <link rel=\"stylesheet\" href=\"https://unpkg.com/leaflet@1.7.1/dist/leaflet.css\"\n   integrity=\"sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==\"\n   crossorigin=\"\"/>`\n"},{"methodName":"interpret","cellName":"ojs-cell-5","inline":false,"source":"\nurlWFS = \"https://geoservicos.ibge.gov.br/geoserver/ows\";\n\nlistaUF = await wfsRequest(urlWFS, \"GetFeature\", {\n  service: \"WFS\",\n  version: \"2.0.0\",\n  typeNames: \"CGMAT:pbqg22_02_Estado_NomUF\",\n  PropertyName: \"cd_uf,nm_uf\",\n  outputFormat: \"application/json\"\n});\n\ngeo_uf = await wfsRequest(urlWFS, \"GetFeature\", {\n  service: \"WFS\",\n  version: \"2.0.0\",\n  typeNames: \"CGMAT:pbqg22_02_Estado_NomUF\",\n  cql_filter: `nm_uf='${selNomUF}'`,\n  outputFormat: \"application/json\"\n});\n\nMunicUF = await wfsRequest(urlWFS, \"GetFeature\", {\n  service: \"WFS\",\n  version: \"2.0.0\",\n  typeNames: \"CGEO:PARBR2018_Municipios_mapeados\",\n  cql_filter: `uf='${selUF}'`,\n  outputFormat: \"application/json\"\n});\n\nbater = await wfsRequest(urlWFS, \"GetFeature\", {\n  service: \"WFS\",\n  version: \"2.0.0\",\n  typeNames: \"CGEO:PARBR2018_BATER_MD\",\n  cql_filter: `geo_mun='${selCdMunic}'`,\n  outputFormat: \"application/json\"\n});\n\nselUF = stripAccents(selNomUF);\n\nselCdMunic = MunicUF.data.features.filter((d) => d.properties.nommunic === selNomMunic)[0].properties.codmunic;\n\nselMunicArray = MunicUF.data.features.filter((d) => d.properties.nommunic == selNomMunic);\n\nselMunic = ({\n  \"type\":\"FeatureCollection\",\n  \"features\":selMunicArray  \n});\n\n"},{"methodName":"interpret","cellName":"ojs-cell-6","inline":false,"source":"\nviewof selNomUF = Inputs.select(\n    listaUF.data.features.map((d) => d.properties.nm_uf), \n    {\n        label: \"Unidade da Federação\"\n    }\n);\n"},{"methodName":"interpret","cellName":"ojs-cell-7","inline":false,"source":"mapauf = bertin.draw({\n  params: { background: \"#bde1f0\", margin: 10 },\n  layers: [{\n      type: \"layer\",\n      geojson: selMunic,\n      fill: \"#ff0000\",      \n      fillOpacity: 1,\n      stroke: \"#000000\",\n      strokeWidth: 2,\n      symbol: \"square\",\n      symbol_size: 50\n    },\n    {\n      type: \"layer\",\n      geojson: MunicUF.data,\n      fill: \"#000000\",\n      fillOpacity: 0.0,\n      stroke: \"#ff0000\",\n      strokeWidth: 3,\n      symbol: \"square\",\n      symbol_size: 50\n    },\n    {\n      type: \"layer\",\n      geojson: geo_uf.data,\n      fill: \"#999999\",      \n      fillOpacity: 0.25,\n      stroke: \"#777777\",\n      strokeWidth: 3,\n      symbol: \"square\",\n      symbol_size: 50\n    },\n    {\n      type: \"tiles\",\n      opacity: 1,\n      style: \"openstreetmap\",\n    }\n  ]\n});\n"},{"methodName":"interpret","cellName":"ojs-cell-8","inline":false,"source":"viewof selNomMunic = Inputs.select(\n    MunicUF.data.features.map((d) => d.properties.nommunic),\n    {\n        label: \"Município\"\n    }\n)\n"},{"methodName":"interpret","cellName":"ojs-cell-9","inline":false,"source":"\nmapaInterativo = {\n  let container = DOM.element('div', { style: `width:${width*0.95}px;height:${width/1.7}px` });\n \n  yield container;\n  \n  let map = L.map(container);\n  let osmTileLayer = L.tileLayer( 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {\n      attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>'\n  }).addTo( map );\n  \n  let baterLayer = L.geoJson(bater.data, {\n    weight: 5,\n    color: '#ff0000'\n  }).addTo(map);\n  baterLayer.bindPopup(\"Aqui aparecem os dados da bater\");\n  map.fitBounds(baterLayer.getBounds());\n}\n\n"},{"methodName":"interpret","cellName":"ojs-cell-10","inline":false,"source":"\nasync function wfsRequest(\n  url,\n  operation = \"GetCapabilities\",\n  extraParameters = {}\n) {\n  const queryParameters = new URLSearchParams({\n    request: operation,\n    service: \"WFS\",\n    ...extraParameters\n  }).toString();\n\n  console.log(queryParameters);\n\n  const response = await fetch(`${url}?${queryParameters}`);\n  const responseFormat = response.headers.get(\"Content-Type\");\n\n  // If the WFS server returns Content-Type header containing \"json\" it will read the data as json, otherwise as text.\n  const data = responseFormat.includes(\"json\")\n    ? await response.json()\n    : await response.text();\n\n  return {\n    data: data,\n    status: response.status\n  };\n};\n\nfunction stripAccents(str) {\n    var reAccents = /[àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ]/g;\n    var replacements = 'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY';\n    return str.replace(reAccents, function (match) {\n        return replacements[reAccents.source.indexOf(match)];\n    });\n};\n\n"},{"methodName":"interpretQuiet","source":"shinyInput('tabexemp')"},{"methodName":"interpretQuiet","source":"shinyInput('selNomUF')"},{"methodName":"interpretQuiet","source":"shinyInput('selNomMunic')"}]}
 </script>
 <script type="module">
 window._ojs.paths.runtimeToDoc = "../..";

@@ -213,8 +213,14 @@ primeiro carrega as bibliotecas do *Observable*. Foram usadas a [*bertin*](https
 ```{ojs}
 
 bertin = require("bertin@1");
-L = require('leaflet@1.2.0');
-html`<link href='${resolve('leaflet@1.2.0/dist/leaflet.css')}' rel='stylesheet' />`
+```
+```{ojs}
+L = require('leaflet@1.7.1');
+```
+```{ojs}
+html` <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>`
 ```
 
 As camadas utilizadas são obtidas dos geoserviços do IBGE. Para reduzir a transferência de dados, só são requisitados do servidor os dados necessários para construir as listas e mapa mosca das UFs e Municípios e representar as BATERs do município selecionado, através dos campos *PropertyName* e *cql_filter*.
@@ -281,6 +287,9 @@ viewof selNomUF = Inputs.select(
     }
 );
 ```
+
+
+
 ```{ojs}
 //| column: margin
 mapauf = bertin.draw({
@@ -288,8 +297,8 @@ mapauf = bertin.draw({
   layers: [{
       type: "layer",
       geojson: selMunic,
-      fill: "#000000",      
-      fillOpacity: 0.8,
+      fill: "#ff0000",      
+      fillOpacity: 1,
       stroke: "#000000",
       strokeWidth: 2,
       symbol: "square",
@@ -298,10 +307,10 @@ mapauf = bertin.draw({
     {
       type: "layer",
       geojson: MunicUF.data,
-      fill: "#ff0000",
-      fillOpacity: 0.6,
+      fill: "#000000",
+      fillOpacity: 0.0,
       stroke: "#ff0000",
-      strokeWidth: 1,
+      strokeWidth: 3,
       symbol: "square",
       symbol_size: 50
     },
@@ -311,7 +320,7 @@ mapauf = bertin.draw({
       fill: "#999999",      
       fillOpacity: 0.25,
       stroke: "#777777",
-      strokeWidth: 2,
+      strokeWidth: 3,
       symbol: "square",
       symbol_size: 50
     },
@@ -324,6 +333,8 @@ mapauf = bertin.draw({
 });
 ```
 
+
+
 ```{ojs}
 viewof selNomMunic = Inputs.select(
     MunicUF.data.features.map((d) => d.properties.nommunic),
@@ -331,21 +342,24 @@ viewof selNomMunic = Inputs.select(
         label: "Município"
     }
 )
+```
+:::{.column-screen-inset}
+
+```{ojs}
 
 mapaInterativo = {
-  let container = DOM.element('div', { style: `width:${width/2.35}px;height:${width/3.2}px` });
+  let container = DOM.element('div', { style: `width:${width*0.95}px;height:${width/1.7}px` });
  
   yield container;
   
-  // Now we create a map object and add a layer to it.
   let map = L.map(container);
-  let osmLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png', {
-      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-  }).addTo(map);
+  let osmTileLayer = L.tileLayer( 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo( map );
   
   let baterLayer = L.geoJson(bater.data, {
     weight: 5,
-    color: '#432'
+    color: '#ff0000'
   }).addTo(map);
   baterLayer.bindPopup("Aqui aparecem os dados da bater");
   map.fitBounds(baterLayer.getBounds());
@@ -354,7 +368,7 @@ mapaInterativo = {
 
 
 ```
-
+:::
 ## Apêndice
 Funções do *Observable* utilizadas no código anterior. Devido à natureza reativa do *Observable*, a ordem dos códigos do mesmo no documento não tem importância.
 
