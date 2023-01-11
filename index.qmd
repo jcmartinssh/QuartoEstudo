@@ -7,7 +7,7 @@ format:
     code-fold: true
     fig-height: 5
     fig-width: 7
-    page-layout: full
+    page-layout: article
 execute:
   warning: false
   cache: true
