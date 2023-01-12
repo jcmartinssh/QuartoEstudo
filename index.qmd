@@ -480,18 +480,6 @@ mapaInterativo = {
 
 ```
 
-$.getJSON(wfs_url).then((res) => {
-  var layer = L.geoJson(res, {
-    onEachFeature: function (feature, layer) {
-      var popupTxt = 'Epicentral area: ' + feature.properties.EpicentralArea + '<br>' +
-                     'Year: ' + feature.properties.Year +  '<br>' +
-                     'Magnitude: ' + feature.properties.MwDef
-      layer.bindPopup(popupTxt);
-    }      
-  }).addTo(map);
-  map.fitBounds(layer.getBounds());
-});
-
 :::
 ## Apêndice
 Funções do *Observable* utilizadas no código anterior. Devido à natureza reativa do *Observable*, a ordem dos códigos do mesmo no documento não tem importância.
