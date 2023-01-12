@@ -7,10 +7,10 @@ format:
     code-fold: true
     fig-height: 5
     fig-width: 7
-    page-layout: full
+    page-layout: article
 execute:
   warning: false
-  cache: true
+  # cache: true
  
 ---
 ## Introdução
@@ -186,25 +186,97 @@ graf_geo
 Alertas.
 ```{r}
 #| label: fig-geral
+#| layout-ncol: 2
 #| fig-cap: Geral
-#| fig-column: screen
-#| fig-width : 15
+#| fig-subcap:
+#|   - "Norte"
+#|   - "Nordeste"
+#|   - "Sudeste"
+#|   - "Sul"
+#|   - "Centro-Oeste"
+#|   -  "Brasil"
 
+# graf_geral <- Med_Geral %>%
+#   filter(Tipo == "Event") %>%
+#   arrange(GdReg) %>%
+#   ggplot(aes(x = mes, y = Media, colour = GdReg, group = GdReg, linetype = GdReg)) +
+#   geom_line(size = 0.5) +
+#   labs(title = "Média mensal de alertas de risco geohidrológico,\npor Grandes Regiões - 2012-2021") +
+#   xlab("Mês") +
+#   ylab("Alertas") +
+#   lineScale +
+#   colScale +
+#   theme(legend.position="none") +
+#   facet_wrap(vars(GdReg), nrow = 3)
 
-graf_geral <- Med_Geral %>%
-  filter(Tipo == "Event") %>%
-  arrange(GdReg) %>%
+graf_N <- Med_Geral %>%
+  filter(Tipo == "Event" & GdReg == "N") %>%
   ggplot(aes(x = mes, y = Media, colour = GdReg, group = GdReg, linetype = GdReg)) +
   geom_line(size = 0.5) +
-  labs(title = "Média mensal de alertas de risco geohidrológico,\npor Grandes Regiões - 2012-2021") +
+  labs(title = "Norte") +
   xlab("Mês") +
   ylab("Alertas") +
-  lineScale +
   colScale +
-  theme(legend.margin = margin(0, 40, 0, 40)) +
-  facet_wrap(vars(GdReg), nrow = 1)
+  theme(legend.position="none")
 
-graf_geral
+graf_NE <- Med_Geral %>%
+  filter(Tipo == "Event" & GdReg == "NE") %>%
+  ggplot(aes(x = mes, y = Media, colour = GdReg, group = GdReg, linetype = GdReg)) +
+  geom_line(size = 0.5) +
+  labs(title = "Nordeste") +
+  xlab("Mês") +
+  ylab("Alertas") +
+  colScale +
+  theme(legend.position="none")
+
+graf_SE <- Med_Geral %>%
+  filter(Tipo == "Event" & GdReg == "SE") %>%
+  ggplot(aes(x = mes, y = Media, colour = GdReg, group = GdReg, linetype = GdReg)) +
+  geom_line(size = 0.5) +
+  labs(title = "Sudeste") +
+  xlab("Mês") +
+  ylab("Alertas") +
+  colScale +
+  theme(legend.position="none")
+
+graf_S <- Med_Geral %>%
+  filter(Tipo == "Event" & GdReg == "S") %>%
+  ggplot(aes(x = mes, y = Media, colour = GdReg, group = GdReg, linetype = GdReg)) +
+  geom_line(size = 0.5) +
+  labs(title = "Sul") +
+  xlab("Mês") +
+  ylab("Alertas") +
+  colScale +
+  theme(legend.position="none")
+
+graf_CO <- Med_Geral %>%
+  filter(Tipo == "Event" & GdReg == "CO") %>%
+  ggplot(aes(x = mes, y = Media, colour = GdReg, group = GdReg, linetype = GdReg)) +
+  geom_line(size = 0.5) +
+  labs(title = "Centro-Oeste") +
+  xlab("Mês") +
+  ylab("Alertas") +
+  colScale +
+  theme(legend.position="none")
+
+graf_BR <- Med_Geral %>%
+  filter(Tipo == "Event" & GdReg == "Brasil") %>%
+  ggplot(aes(x = mes, y = Media, colour = GdReg, group = GdReg, linetype = GdReg)) +
+  geom_line(size = 0.5) +
+  labs(title = "Brasil") +
+  xlab("Mês") +
+  ylab("Alertas") +
+  scale_linetype_manual(values = 2) +
+  colScale +
+  theme(legend.position="none")
+
+graf_N
+graf_NE
+graf_SE
+graf_S
+graf_CO
+graf_BR
+
 ```
 Ainda vou testar as possibilidades de produção de gráficos interativos.
 
@@ -221,6 +293,21 @@ L = require('leaflet@1.7.1');
 html` <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
    crossorigin=""/>`
+```
+
+```{ojs}
+Plot.plot({
+  x: {
+    label: "% Pop em risco"
+  },
+  y: {
+    label: "Pop abs em risco"
+  },
+  marks: [
+    Plot.dot(MunicUF.data.features.map((d) => d.properties), {x: d => d["morador"] / d["pop2010"] * 100 , y: "morador"}),
+    Plot.dot(MunicUF.data.features.filter((d) => d.properties.nommunic == selNomMunic).map((d) => d.properties), {x: d => d["morador"] / d["pop2010"] * 100, y: "morador", fill: "#ff0000"})
+  ]
+});
 ```
 
 :::{.column-margin}
@@ -353,7 +440,7 @@ viewof selNomMunic = Inputs.select(
     {
         label: "Município"
     }
-)
+);
 ```
 
 :::{.column-screen-inset}
@@ -369,18 +456,42 @@ mapaInterativo = {
   let osmTileLayer = L.tileLayer( 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo( map );
+
+  let limMunic = L.geoJson(selMunic, {
+    weight: 4,
+    color: '#777777'
+  }).addTo(map);
   
   let baterLayer = L.geoJson(bater.data, {
     weight: 5,
-    color: '#ff0000'
+    color: '#ff0000',
+    onEachFeature: function (feature, layer) {
+      let popupTxt = 'Moradores: ' + 
+      feature.properties.d004 +
+      '<br>Domicílios: ' + feature.properties.d001 +
+      '<br>Acurácia: ' + feature.properties.acuracia;
+      layer.bindPopup(popupTxt);
+    }
   }).addTo(map);
-  baterLayer.bindPopup("aqui aparecem dados da BATER");
   map.fitBounds(baterLayer.getBounds());
 }
 
 
 
 ```
+
+$.getJSON(wfs_url).then((res) => {
+  var layer = L.geoJson(res, {
+    onEachFeature: function (feature, layer) {
+      var popupTxt = 'Epicentral area: ' + feature.properties.EpicentralArea + '<br>' +
+                     'Year: ' + feature.properties.Year +  '<br>' +
+                     'Magnitude: ' + feature.properties.MwDef
+      layer.bindPopup(popupTxt);
+    }      
+  }).addTo(map);
+  map.fitBounds(layer.getBounds());
+});
+
 :::
 ## Apêndice
 Funções do *Observable* utilizadas no código anterior. Devido à natureza reativa do *Observable*, a ordem dos códigos do mesmo no documento não tem importância.
