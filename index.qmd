@@ -295,6 +295,21 @@ html` <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.
    crossorigin=""/>`
 ```
 
+```{ojs}
+Plot.plot({
+  x: {
+    label: "% Pop em risco"
+  },
+  y: {
+    label: "Pop abs em risco"
+  },
+  marks: [
+    Plot.dot(MunicUF.data.features.map((d) => d.properties), {x: d => d["morador"] / d["pop2010"] * 100 , y: "morador"}),
+    Plot.dot(MunicUF.data.features.filter((d) => d.properties.nommunic == selNomMunic).map((d) => d.properties), {x: d => d["morador"] / d["pop2010"] * 100, y: "morador", fill: "#ff0000"})
+  ]
+});
+```
+
 :::{.column-margin}
 Dá para colocar texto e figuras em margem, etc. Usa o [*bootstrap*](https://getbootstrap.com/) para formatar o conteúdo html.
 
@@ -425,7 +440,7 @@ viewof selNomMunic = Inputs.select(
     {
         label: "Município"
     }
-)
+);
 ```
 
 :::{.column-screen-inset}
@@ -441,18 +456,42 @@ mapaInterativo = {
   let osmTileLayer = L.tileLayer( 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo( map );
+
+  let limMunic = L.geoJson(selMunic, {
+    weight: 4,
+    color: '#777777'
+  }).addTo(map);
   
   let baterLayer = L.geoJson(bater.data, {
     weight: 5,
-    color: '#ff0000'
+    color: '#ff0000',
+    onEachFeature: function (feature, layer) {
+      let popupTxt = 'Moradores: ' + 
+      feature.properties.d004 +
+      '<br>Domicílios: ' + feature.properties.d001 +
+      '<br>Acurácia: ' + feature.properties.acuracia;
+      layer.bindPopup(popupTxt);
+    }
   }).addTo(map);
-  baterLayer.bindPopup("aqui aparecem dados da BATER");
   map.fitBounds(baterLayer.getBounds());
 }
 
 
 
 ```
+
+$.getJSON(wfs_url).then((res) => {
+  var layer = L.geoJson(res, {
+    onEachFeature: function (feature, layer) {
+      var popupTxt = 'Epicentral area: ' + feature.properties.EpicentralArea + '<br>' +
+                     'Year: ' + feature.properties.Year +  '<br>' +
+                     'Magnitude: ' + feature.properties.MwDef
+      layer.bindPopup(popupTxt);
+    }      
+  }).addTo(map);
+  map.fitBounds(layer.getBounds());
+});
+
 :::
 ## Apêndice
 Funções do *Observable* utilizadas no código anterior. Devido à natureza reativa do *Observable*, a ordem dos códigos do mesmo no documento não tem importância.
