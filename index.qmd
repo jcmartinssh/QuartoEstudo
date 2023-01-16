@@ -11,21 +11,31 @@ format:
 execute:
   warning: false
   # cache: true
- 
+editor: 
+  markdown: 
+    wrap: sentence
 ---
+
 ## Introdução
 
-[*Quarto*](https://quarto.org/) é um sistema de produção de publicações técnicas e científicas que incorpora ferramentas de formatação de texto com códigos de programação para produção de gráficos e tabelas. É o sucessor do [*R markdown*](https://rmarkdown.rstudio.com/) e segue a linha de outros *notebooks* reativos, como o [*Jupyter Notebook*](https://jupyter.org/). É um sistema de código aberto cujos principais destques são permitir a utilização de diversas linguagens de programação ([*Python*](https://www.python.org/), [*R*](https://www.r-project.org/), [*Julia*](https://julialang.org/) e [*Observable*](https://observablehq.com/)) e a exportação para diversos formatos de publicação através da utilização do [*Pandoc*](https://pandoc.org/).
+[*Quarto*](https://quarto.org/) é um sistema de produção de publicações técnicas e científicas que incorpora ferramentas de formatação de texto com códigos de programação para produção de gráficos e tabelas.
+É o sucessor do [*R markdown*](https://rmarkdown.rstudio.com/) e segue a linha de outros *notebooks* reativos, como o [*Jupyter Notebook*](https://jupyter.org/).
+É um sistema de código aberto cujos principais destques são permitir a utilização de diversas linguagens de programação ([*Python*](https://www.python.org/), [*R*](https://www.r-project.org/), [*Julia*](https://julialang.org/) e [*Observable*](https://observablehq.com/)) e a exportação para diversos formatos de publicação através da utilização do [*Pandoc*](https://pandoc.org/).
 
-As suas funcionalidades relativas ao processamento de dados espaciais e tabulares com linguagens de programação e produção de documentos em .pdf ou .doc já são interessantes por facilitar a padronização da análise e publicação de resultados. Mas são sua integração com o *Observable* e capacidade de produção de documentos *html* que oferecem as maiores possibilidades de enriquecimento da publicação com conteúdo dinâmico e interativo.
+As suas funcionalidades relativas ao processamento de dados espaciais e tabulares com linguagens de programação e produção de documentos em .pdf ou .doc já são interessantes por facilitar a padronização da análise e publicação de resultados.
+Mas são sua integração com o *Observable* e capacidade de produção de documentos *html* que oferecem as maiores possibilidades de enriquecimento da publicação com conteúdo dinâmico e interativo.
 
-Elementos interativos como listas de seleção, tabelas, e gráficos, etc, produzidos nas linguagens *Python*, *R* ou *Julia* possuem recursos limitados de interatividade em publicações *online*, necessitando de *frameworks* como o [*Dash*](https://dash.plotly.com/) ou o [*Shiny*](https://shiny.rstudio.com/) para poderem apresentar comportamento realmente dinâmico. Esses *frameworks* exigem a configuração do servidor de hospedagem com os interpretadores e bibliotecas e também de tempo de processamento para atender requisições dos usuários, dificultando a utilização dessas capacidades na publicação de resultados de pesquisas. O *Observable*, porém, é um *JavaScript melhorado* que é interpretado diretamente pelo navegador do usuário, dispensando a utilização do servidor no processamento dos dados. Essa característica, associada à utilização de [geoserviços do IBGE](https://geoservicos.ibge.gov.br), permite desde a publicação enriquecida com conteúdo interativo até a produção de *dashboards* complexos com dados de diversas fontes sem a necessidade de gastos com servidor e apoio institucional.
+Elementos interativos como listas de seleção, tabelas, e gráficos, etc, produzidos nas linguagens *Python*, *R* ou *Julia* possuem recursos limitados de interatividade em publicações *online*, necessitando de *frameworks* como o [*Dash*](https://dash.plotly.com/) ou o [*Shiny*](https://shiny.rstudio.com/) para poderem apresentar comportamento realmente dinâmico.
+Esses *frameworks* exigem a configuração do servidor de hospedagem com os interpretadores e bibliotecas e também de tempo de processamento para atender requisições dos usuários, dificultando a utilização dessas capacidades na publicação de resultados de pesquisas.
+O *Observable*, porém, é um *JavaScript melhorado* que é interpretado diretamente pelo navegador do usuário, dispensando a utilização do servidor no processamento dos dados.
+Essa característica, associada à utilização de [geoserviços do IBGE](https://geoservicos.ibge.gov.br), permite desde a publicação enriquecida com conteúdo interativo até a produção de *dashboards* complexos com dados de diversas fontes sem a necessidade de gastos com servidor e apoio institucional.
 
 ## Exemplos de funcionalidades
 
 Para avaliar algumas funcionalidades de maior relevância, foram utilizados os dados de Alertas de riscos de desastres emitidos pelo CEMADEN compilados para o Atlas Nacional Digital do Brasil - 2022.
 
 ### Dados e Bibliotecas
+
 Carrega a tabela com os dados e as bibliotecas utilizadas.
 
 ```{r}
@@ -47,7 +57,9 @@ planilha <- read_excel("W:/DGC_ACERVO_CGEO/PROJETOS_EM_ANDAMENTO/Cemaden/BOLSIST
 ```
 
 ### Tabelas
+
 Tabela processada em *R* e apresentada de maneira estática.
+
 ```{r}
 #| warning: false
 
@@ -62,23 +74,32 @@ Tot_Mun <- planilha %>%
 
 kable(head(Tot_Mun))
 ```
+
 Essa tabela pode ser apresentada de maneira dinâmica com a biblioteca [*DT*](https://rstudio.github.io/DT/).
+
 ```{r}
 #| warning: false
 datatable(Tot_Mun)
 
 ```
+
 Ou ainda pelo *Observable*.
+
 ```{r}
 #| cache: false
+
 ojs_define(totais = Tot_Mun)
 ```
+
 ```{ojs}
 viewof tabexemp = Inputs.table(transpose(totais));
 
 ```
+
 ### Gráficos
+
 Agregação de dados no *R* para a produção de gráficos estáticos.
+
 ```{r}
 
 Med_GdReg_data <- planilha %>%
@@ -119,7 +140,9 @@ Med_Geral %>%
   pivot_wider(id_cols = GdReg, names_from = mes, values_from = Media) %>%
   datatable()
 ```
+
 Configurações de tema e estilo - desenvolvido pro Atlas Nacional Digital 2022.
+
 ```{r}
 
 showtext_auto()
@@ -145,7 +168,9 @@ colScale <- scale_color_manual(name = "GdReg", labels = c("Brasil", "Norte", "No
 lineScale <- scale_linetype_manual(name = "GdReg", labels = c("Brasil", "Norte", "Nordeste", "Sudeste", "Sul", "Centro-Oeste"), values = c(2, 1, 1, 1, 1, 1))
 
 ```
+
 Alertas Hidrológicos.
+
 ```{r}
 #| label: fig-hidro
 #| fig-cap: Hidrológico
@@ -164,7 +189,9 @@ graf_hidro <- Med_Geral %>%
 
 graf_hidro
 ```
+
 Alertas Geológicos.
+
 ```{r}
 #| label: fig-geo
 #| fig-cap: Geológico
@@ -183,7 +210,9 @@ graf_geo <- Med_Geral %>%
 
 graf_geo
 ```
+
 Alertas.
+
 ```{r}
 #| label: fig-geral
 #| layout-ncol: 2
@@ -278,17 +307,23 @@ graf_CO
 graf_BR
 
 ```
+
 Ainda vou testar as possibilidades de produção de gráficos interativos.
 
 ### Mapas
-primeiro carrega as bibliotecas do *Observable*. Foram usadas a [*bertin*](https://github.com/neocarto/bertin) para produção de cartogramas e [*Leaflet*](https://leafletjs.com/) para a incorporação de mapas com *pan* e *zoom*. 
+
+primeiro carrega as bibliotecas do *Observable*.
+Foram usadas a [*bertin*](https://github.com/neocarto/bertin) para produção de cartogramas e [*Leaflet*](https://leafletjs.com/) para a incorporação de mapas com *pan* e *zoom*.
+
 ```{ojs}
 
 bertin = require("bertin@1");
 ```
+
 ```{ojs}
 L = require('leaflet@1.7.1');
 ```
+
 ```{ojs}
 html` <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -310,10 +345,9 @@ Plot.plot({
 });
 ```
 
-:::{.column-margin}
-Dá para colocar texto e figuras em margem, etc. Usa o [*bootstrap*](https://getbootstrap.com/) para formatar o conteúdo html.
-
-
+::: column-margin
+Dá para colocar texto e figuras em margem, etc.
+Usa o [*bootstrap*](https://getbootstrap.com/) para formatar o conteúdo html.
 
 ```{ojs}
 
@@ -325,7 +359,6 @@ viewof selNomUF = Inputs.select(
     }
 );
 ```
-
 
 As ferramentas de layout são relativamente simples, mas podem ser trabalhadas com mais detalhe utilizando *html* e *css*.
 
@@ -371,10 +404,10 @@ mapauf = bertin.draw({
   ]
 });
 ```
-
 :::
 
-As camadas utilizadas são obtidas dos geoserviços do IBGE. Para reduzir a transferência de dados, só são requisitados do servidor os dados necessários para construir as listas e mapa mosca das UFs e Municípios e representar as BATERs do município selecionado, através dos campos *PropertyName* e *cql_filter*.
+As camadas utilizadas são obtidas dos geoserviços do IBGE.
+Para reduzir a transferência de dados, só são requisitados do servidor os dados necessários para construir as listas e mapa mosca das UFs e Municípios e representar as BATERs do município selecionado, através dos campos *PropertyName* e *cql_filter*.
 
 ```{ojs}
 
@@ -427,6 +460,7 @@ selMunic = ({
 ```
 
 Essa tabela pode funcionar como seleção do município...
+
 ```{ojs}
 
 viewof tabMunic = Inputs.table(MunicUF.data.features.map((d) => d.properties));
@@ -434,6 +468,7 @@ viewof tabMunic = Inputs.table(MunicUF.data.features.map((d) => d.properties));
 ```
 
 ... ao invés dessa caixinha de seleção.
+
 ```{ojs}
 viewof selNomMunic = Inputs.select(
     MunicUF.data.features.map((d) => d.properties.nommunic),
@@ -443,8 +478,7 @@ viewof selNomMunic = Inputs.select(
 );
 ```
 
-:::{.column-screen-inset}
-
+::: column-screen-inset
 ```{ojs}
 
 mapaInterativo = {
@@ -479,10 +513,12 @@ mapaInterativo = {
 
 
 ```
-
 :::
+
 ## Apêndice
-Funções do *Observable* utilizadas no código anterior. Devido à natureza reativa do *Observable*, a ordem dos códigos do mesmo no documento não tem importância.
+
+Funções do *Observable* utilizadas no código anterior.
+Devido à natureza reativa do *Observable*, a ordem dos códigos do mesmo no documento não tem importância.
 
 ```{ojs}
 
@@ -513,9 +549,10 @@ async function wfsRequest(
   };
 };
 
+// Maranhão é o único estado com acento no nome na camada de municípios mapeados :P - mantive o "ã" com acento
 function stripAccents(str) {
-    var reAccents = /[àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ]/g;
-    var replacements = 'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY';
+    var reAccents = /[àáâäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ]/g;
+    var replacements = 'aaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY';
     return str.replace(reAccents, function (match) {
         return replacements[reAccents.source.indexOf(match)];
     });
