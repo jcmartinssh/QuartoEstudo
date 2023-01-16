@@ -549,9 +549,10 @@ async function wfsRequest(
   };
 };
 
+// Maranhão é o único estado com acento no nome na camada de municípios mapeados :P - mantive o "ã" com acento
 function stripAccents(str) {
-    var reAccents = /[àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ]/g;
-    var replacements = 'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY';
+    var reAccents = /[àáâäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ]/g;
+    var replacements = 'aaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY';
     return str.replace(reAccents, function (match) {
         return replacements[reAccents.source.indexOf(match)];
     });
