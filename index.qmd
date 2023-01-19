@@ -225,19 +225,6 @@ Alertas.
 #|   - "Centro-Oeste"
 #|   -  "Brasil"
 
-# graf_geral <- Med_Geral %>%
-#   filter(Tipo == "Event") %>%
-#   arrange(GdReg) %>%
-#   ggplot(aes(x = mes, y = Media, colour = GdReg, group = GdReg, linetype = GdReg)) +
-#   geom_line(size = 0.5) +
-#   labs(title = "Média mensal de alertas de risco geohidrológico,\npor Grandes Regiões - 2012-2021") +
-#   xlab("Mês") +
-#   ylab("Alertas") +
-#   lineScale +
-#   colScale +
-#   theme(legend.position="none") +
-#   facet_wrap(vars(GdReg), nrow = 3)
-
 graf_N <- Med_Geral %>%
   filter(Tipo == "Event" & GdReg == "N") %>%
   ggplot(aes(x = mes, y = Media, colour = GdReg, group = GdReg, linetype = GdReg)) +
@@ -307,8 +294,6 @@ graf_CO
 graf_BR
 
 ```
-
-Ainda vou testar as possibilidades de produção de gráficos interativos.
 
 ### Mapas
 
