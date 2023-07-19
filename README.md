@@ -1,2 +1,2 @@
 # QuartoEstudo
-[site](https://jazzyjones.github.io/QuartoEstudo/)
+[site](https://jcmartinssh.github.io/QuartoEstudo/)
